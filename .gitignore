@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Claude Code 本機設定（含權限設定，不入公開 repo）
+.claude/
