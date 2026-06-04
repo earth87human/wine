@@ -358,6 +358,7 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 .modal-rating { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--f-display); font-style: italic; color: var(--wine); }
 .modal-rating i { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--wine); }
 .modal-rating i.on { background: var(--wine); }
+.modal-rating i.is-partial { background: linear-gradient(90deg, var(--wine) var(--p, 50%), transparent var(--p, 50%)); }
 .modal-rating--unrated { color: var(--bronze-text); }
 
 /* 購入 — price block */

@@ -137,7 +137,8 @@ function renderRatingChart(drinks) {
   const counts = [0, 0, 0, 0, 0]; // index 0 = 1 star ... index 4 = 5 stars
   let unrated = 0;
   drinks.forEach(d => {
-    if (d.rating >= 1 && d.rating <= 5) counts[d.rating - 1]++;
+    // round to the nearest whole star so fractional ratings (e.g. 3.8) bucket cleanly
+    if (d.rating >= 1 && d.rating <= 5) counts[Math.round(d.rating) - 1]++;
     else if (d.rating == null) unrated++;
   });
   const max = Math.max(...counts, unrated, 1);

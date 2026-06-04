@@ -241,9 +241,23 @@ function openModal(d, { push = true } = {}) {
         ${buyLines.length ? `<div class="modal-buy__lines">${buyLines.map(l => `<span>${l}</span>`).join('')}</div>` : ''}
       </div>` : '';
 
+  // 評分點：支援小數（如 3.8 → 第 4 顆點填 80%）
+  const ratingDots = val => Array.from({ length: 5 }, (_, n) => {
+    const fill = Math.max(0, Math.min(1, val - n));
+    if (fill >= 1) return '<i class="on"></i>';
+    if (fill <= 0) return '<i></i>';
+    return `<i class="on is-partial" style="--p:${(fill * 100).toFixed(0)}%"></i>`;
+  }).join('');
   const ratingMarkup = isRated
-    ? `<div class="modal-rating">${Array.from({ length: 5 }, (_, n) => `<i class="${n < d.rating ? 'on' : ''}"></i>`).join('')} <span>${d.rating} / 5</span></div>`
+    ? `<div class="modal-rating">${ratingDots(d.rating)} <span>${d.rating} / 5</span></div>`
     : `<div class="modal-rating modal-rating--unrated"><span>待品飲 · 等我自己喝過，再親手打分</span></div>`;
+
+  // 我的筆記：已品飲但沒寫筆記 → 誠實標示（不再顯示「待品飲」）
+  const notesMarkup = d.notes_long
+    ? `<p>${esc(d.notes_long)}</p>`
+    : (isRated
+        ? '<p class="modal-empty-note">喝過了，這支沒特別落筆——分數就是心得。</p>'
+        : '<p class="modal-empty-note">待品飲 · 尚未落筆</p>');
 
   // 怎麼喝：適飲期／溫度／醒酒，三條小規格
   const serveRows = [
@@ -324,7 +338,7 @@ function openModal(d, { push = true } = {}) {
       <div class="modal-section"><h3>尾韻 / Finish</h3>${prose(d.finish)}</div>
       <div class="modal-section"><h3>配餐 / Pairing</h3>${chips(d.pairing)}${d.pairing_note ? `<p class="modal-pair-note">${esc(d.pairing_note)}</p>` : ''}</div>
       ${serveSection}
-      <div class="modal-section"><h3>我的筆記 / Notes</h3>${prose(d.notes_long)}</div>
+      <div class="modal-section"><h3>我的筆記 / Notes</h3>${notesMarkup}</div>
       ${knowSection ? `<div class="modal-know">${knowSection}</div>` : ''}
       <div class="modal-section"><h3>場景 / Context</h3><p>${esc(fmtDate(d.tasting_date))} · ${esc(d.occasion)}</p></div>
     </div>`;
