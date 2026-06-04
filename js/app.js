@@ -29,26 +29,15 @@ const IMG_BY_TYPE = {
   'white':           'photo-1597905722448-a1df7c00000a',
   'sparkling-white': 'photo-1607955868623-e135a7e50b0d',
   'rose':            'photo-1547595628-c61a29f496f0',
-  'beer-pale':       'photo-1601912414323-0debc2271e40',
-  'beer-dark':       'photo-1601912414323-0debc2271e40',
-  'beer-craft':      'photo-1592149598903-67e5ee96fe97',
 };
 // One DISTINCT, individually-verified (HTTP 200 + visually vetted) photo per wine,
 // so the gallery never repeats a tile.
 const IMG_BY_ID = {
-  'lambrusco-sorbara':      'photo-1607955868623-e135a7e50b0d', // sparkling flute, fine bubbles
-  'prosecco-doc':           'photo-1669067166035-7e37abaecec8', // two flutes on a café table
-  'cabernet-chile':         'photo-1553361371-9b22f78e8b1d',    // deep red pour
-  'sauvignon-blanc-nz':     'photo-1597905722448-a1df7c00000a', // pale white glass
-  'rose-provence':          'photo-1547595628-c61a29f496f0',    // rosé pour
-  'bordeaux-cantemerle':    'photo-1665567212125-c8baa3469e45', // crystal goblet of red, refined
-  'taiwan-beer-classic':    'photo-1601912414323-0debc2271e40', // golden lager pint
-  'heineken':               'photo-1546622891-02c72c1537b6',    // beer pouring at the tap
-  'asahi-super-dry':        'photo-1571613316887-6f8d5cbf7ef7', // frosty cold lager, macro
-  'taihu-honey-lager':      'photo-1592149598903-67e5ee96fe97', // amber craft beer, honey tone
-  'pinot-nero-eppan':       'photo-1600673177531-46749442aa63', // elegant glass of light red
-  'barbera-nizza-carretta': 'photo-1600785083041-3d6506387699', // oak barrels in the cellar
-  'arneis-cayega-carretta': 'photo-1585553616435-2dc0a54e271d', // golden white wine on dark
+  'pinot-nero-eppan':                 'photo-1600673177531-46749442aa63', // elegant glass of light red
+  'barbera-nizza-carretta':           'photo-1600785083041-3d6506387699', // oak barrels in the cellar
+  'arneis-cayega-carretta':           'photo-1585553616435-2dc0a54e271d', // golden white wine on dark
+  'lambrusco-grasparossa-tradizione': 'photo-1607955868623-e135a7e50b0d', // sparkling, fine bubbles
+  'lambrusco-spiriti-folletti':       'photo-1553361371-9b22f78e8b1d',    // deep red pour
 };
 function photoFor(d, w, h) {
   const id = IMG_BY_ID[d.id] || IMG_BY_TYPE[d.type] || 'photo-1553361371-9b22f78e8b1d';
@@ -229,17 +218,58 @@ function openModal(d, { push = true } = {}) {
     : `<em>${esc(d.name_en || '')}</em>`;
 
   const facts = [
-    { label: '產區', value: d.region_zh || d.region, sub: d.region_zh ? d.region : '' },
     { label: '國家', value: d.country_zh, sub: d.country },
+    { label: '產區', value: d.region_zh || d.region, sub: d.region_zh ? d.region : '' },
     { label: '品種', value: d.varietal_zh, sub: d.varietal },
-    { label: d.category === 'beer' ? '型態' : '年份', value: d.year || meta.zh || '—', sub: '' },
-    { label: 'ABV', value: `${d.abv}%`, sub: '' },
-    { label: '價位', value: d.price_tier, sub: '' },
+    { label: d.category === 'beer' ? '型態' : '年份', value: d.year ? d.year : (d.category === 'beer' ? (meta.zh || '—') : 'NV'), sub: d.year || d.category === 'beer' ? '' : '非年份' },
+    { label: 'ABV', value: d.abv != null ? `${d.abv}%` : '—', sub: '' },
+    { label: '甜度', value: d.sweetness || '—', sub: '' },
   ];
+
+  // 購入資訊：站主實際買的價格／瓶數，外加市場行情參考（非評分）
+  const fmtNT = n => 'NT$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const buyLines = [
+    d.bottles ? `購入 ${d.bottles} 瓶` : '',
+    d.market_price_twd ? `市場行情 ${esc(d.market_price_twd)}` : '',
+  ].filter(Boolean);
+  const priceBlock = d.price != null ? `
+      <div class="modal-buy">
+        <div class="modal-buy__main">
+          <span class="modal-buy__amt">${d.price_estimated ? '約 ' : ''}${fmtNT(d.price)}</span>
+          <span class="modal-buy__unit">／瓶${d.price_estimated ? '（推估）' : ''}</span>
+        </div>
+        ${buyLines.length ? `<div class="modal-buy__lines">${buyLines.map(l => `<span>${l}</span>`).join('')}</div>` : ''}
+      </div>` : '';
 
   const ratingMarkup = isRated
     ? `<div class="modal-rating">${Array.from({ length: 5 }, (_, n) => `<i class="${n < d.rating ? 'on' : ''}"></i>`).join('')} <span>${d.rating} / 5</span></div>`
     : `<div class="modal-rating modal-rating--unrated"><span>待品飲 · 等我自己喝過，再親手打分</span></div>`;
+
+  // 怎麼喝：適飲期／溫度／醒酒，三條小規格
+  const serveRows = [
+    ['適飲期', d.drink_window],
+    ['飲用溫度', d.serve_temp],
+    ['要不要醒酒', d.decant],
+  ].filter(([, v]) => v);
+  const serveSection = serveRows.length ? `
+      <div class="modal-section">
+        <h3>怎麼喝 / How to Enjoy</h3>
+        <dl class="modal-serve">
+          ${serveRows.map(([k, v]) => `<div class="modal-serve__row"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}
+        </dl>
+      </div>` : '';
+
+  // 知識區塊：品種／產區／分級／酒莊／入門／背景（皆為事實、非個人評價）
+  const knowSection = [
+    ['品種小知識', 'About the Grape', d.varietal_note],
+    ['產區風土', 'The Region', d.region_note],
+    ['產區分級', 'Classification', d.classification_note],
+    ['酒莊', 'The Producer', d.producer_note],
+    ['為什麼好入門', 'Easy to Love', d.why_beginner],
+    ['深入認識', 'Background', d.background],
+  ].filter(([, , v]) => v)
+   .map(([zh, en, v]) => `<div class="modal-section"><h3>${esc(zh)} / ${esc(en)}</h3><p>${esc(v)}</p></div>`)
+   .join('');
 
   const axisTier = styleAxisTier(d.style_axis);
   const axisSection = axisTier ? `
@@ -284,6 +314,7 @@ function openModal(d, { push = true } = {}) {
           </div>`).join('')}
       </div>
 
+      ${priceBlock ? `<div class="modal-section"><h3>購入 / Acquired</h3>${priceBlock}</div>` : ''}
       <div class="modal-section"><h3>評分 / Rating</h3>${ratingMarkup}</div>
       ${axisSection}
       <div class="modal-taste">
@@ -291,8 +322,10 @@ function openModal(d, { push = true } = {}) {
         <div class="modal-section"><h3>口感 / Palate</h3>${chips(d.palate)}</div>
       </div>
       <div class="modal-section"><h3>尾韻 / Finish</h3>${prose(d.finish)}</div>
-      <div class="modal-section"><h3>配餐 / Pairing</h3>${chips(d.pairing)}</div>
-      <div class="modal-section"><h3>我的筆記 / Notes</h3>${prose(d.notes_long || d.notes_short)}</div>
+      <div class="modal-section"><h3>配餐 / Pairing</h3>${chips(d.pairing)}${d.pairing_note ? `<p class="modal-pair-note">${esc(d.pairing_note)}</p>` : ''}</div>
+      ${serveSection}
+      <div class="modal-section"><h3>我的筆記 / Notes</h3>${prose(d.notes_long)}</div>
+      ${knowSection ? `<div class="modal-know">${knowSection}</div>` : ''}
       <div class="modal-section"><h3>場景 / Context</h3><p>${esc(fmtDate(d.tasting_date))} · ${esc(d.occasion)}</p></div>
     </div>`;
 

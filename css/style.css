@@ -360,6 +360,27 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 .modal-rating i.on { background: var(--wine); }
 .modal-rating--unrated { color: var(--bronze-text); }
 
+/* 購入 — price block */
+.modal-buy { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1.5rem; }
+.modal-buy__main { display: flex; align-items: baseline; gap: 0.35rem; }
+.modal-buy__amt { font-family: var(--f-display); font-weight: 300; font-size: 1.95rem; line-height: 1; color: var(--wine); letter-spacing: 0.005em; font-variant-numeric: lining-nums tabular-nums; }
+.modal-buy__unit { font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.12em; color: var(--mute); }
+.modal-buy__lines { display: flex; flex-wrap: wrap; gap: 0.35rem 1.2rem; font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.08em; color: var(--ink-soft); }
+.modal-buy__lines span { white-space: nowrap; }
+
+/* 怎麼喝 — serving spec list */
+.modal-serve { margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+.modal-serve__row { display: grid; grid-template-columns: 96px 1fr; gap: 1rem; align-items: baseline; padding-bottom: 0.55rem; border-bottom: 1px solid var(--line); }
+.modal-serve__row:last-child { border-bottom: 0; padding-bottom: 0; }
+.modal-serve dt { font-family: var(--f-ui); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); margin: 0; }
+.modal-serve dd { font-family: var(--f-serif-tc); font-weight: 300; font-size: 0.96rem; line-height: 1.7; color: var(--ink-soft); margin: 0; }
+
+/* 配餐邏輯 — rationale under the chips */
+.modal-section .modal-pair-note { margin-top: 0.85rem; font-style: italic; color: var(--mute); }
+
+/* 知識區塊 — set the educational cluster apart from the personal note above */
+.modal-know { margin-top: 2.4rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+
 /* style axis — single thin line */
 .axis { margin: 0.4rem 0 0; }
 .axis__track { position: relative; height: 1px; background: var(--line-2); margin: 1.4rem 0 0.8rem; }
