@@ -38,6 +38,7 @@ const IMG_BY_ID = {
   'arneis-cayega-carretta':           'photo-1585553616435-2dc0a54e271d', // golden white wine on dark
   'lambrusco-grasparossa-tradizione': 'photo-1607955868623-e135a7e50b0d', // sparkling, fine bubbles
   'lambrusco-spiriti-folletti':       'photo-1553361371-9b22f78e8b1d',    // deep red pour
+  'lambrusco-cella':                  'photo-1669067166035-7e37abaecec8', // two flutes, casual café — party vibe
 };
 function photoFor(d, w, h) {
   const id = IMG_BY_ID[d.id] || IMG_BY_TYPE[d.type] || 'photo-1553361371-9b22f78e8b1d';
