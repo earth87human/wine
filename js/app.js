@@ -10,6 +10,15 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({
 
 let lastFocused = null;
 
+// 國家 → 國旗 emoji（card 上標示產國，讓人一眼知道哪國）
+const FLAG = {
+  'Italy': '🇮🇹', 'France': '🇫🇷', 'Spain': '🇪🇸', 'Germany': '🇩🇪', 'Portugal': '🇵🇹',
+  'Austria': '🇦🇹', 'Greece': '🇬🇷', 'Hungary': '🇭🇺', 'USA': '🇺🇸', 'United States': '🇺🇸',
+  'Chile': '🇨🇱', 'Argentina': '🇦🇷', 'Australia': '🇦🇺', 'New Zealand': '🇳🇿',
+  'South Africa': '🇿🇦', 'Japan': '🇯🇵', 'Taiwan': '🇹🇼', 'Netherlands': '🇳🇱',
+};
+const flagFor = c => FLAG[c] || '';
+
 /* ============================================================
    Dates + photography
    ============================================================ */
@@ -76,37 +85,45 @@ const BUCKETS = [
 /* ============================================================
    Photo card
    ============================================================ */
-function renderCard(d, i) {
+// 收藏卡 = 生成式「酒標」：用資料排版出一張統一的葡萄酒標，不用照片。
+// color_hex 升級成品種色標（左緣色帶 + 右上封蠟點）。modal 仍用照片（photoFor）。
+function renderCard(d) {
   const isRated = d.rating != null;
   const meta = typeMeta[d.type] || { group: 'other' };
-  const isFeat = i === 0;
-  const img = isFeat ? photoFor(d, 1500, 1031) : photoFor(d, 900, 1125);
-  const srcset = isFeat
-    ? `${photoFor(d, 900, 619)} 900w, ${photoFor(d, 1200, 825)} 1200w, ${photoFor(d, 1500, 1031)} 1500w`
-    : `${photoFor(d, 600, 750)} 600w, ${photoFor(d, 750, 938)} 750w, ${photoFor(d, 900, 1125)} 900w, ${photoFor(d, 1200, 1500)} 1200w`;
-  const sizes = isFeat ? '(max-width:1100px) 90vw, 60vw' : '(max-width:680px) 86vw, (max-width:1100px) 45vw, 30vw';
-  const imgAttrs = isFeat
-    ? `loading="lazy" width="1500" height="1031"`
-    : `loading="lazy" width="900" height="1125"`;
-  const yr = d.year ? ` · ${d.year}` : '';
-  const sub = `${esc(d.varietal)} · ${esc(d.region_zh || d.region)}${yr}`;
+  const vintage = d.year ? d.year : 'NV';
+  const grade = (String(d.classification || '').match(/\b(DOCG|DOC|IGT|IGP|DOP)\b/) || [])[0] || '';
+  const swatch = esc(d.color_hex || '#8C8880');
+  const flag = flagFor(d.country);
+
+  // 評分點：支援小數（如 3.8 → 第 4 點填 80%）
   const rating = isRated
     ? `<span class="card__rating" role="img" aria-label="我的評分 ${d.rating} / 5">${
-        Array.from({ length: 5 }, (_, n) => `<i class="${n < d.rating ? 'on' : ''}"></i>`).join('')}</span>`
+        Array.from({ length: 5 }, (_, n) => {
+          const fill = Math.max(0, Math.min(1, d.rating - n));
+          if (fill >= 1) return '<i class="on"></i>';
+          if (fill > 0) return `<i class="half" style="--p:${Math.round(fill * 100)}%"></i>`;
+          return '<i></i>';
+        }).join('')}${d.rating % 1 ? `<em class="card__score">${esc(d.rating)}</em>` : ''}</span>`
     : `<span class="card__unrated">待品飲</span>`;
   const axis = d.style_axis != null
     ? `<span class="card__axis" role="img" aria-label="風格光譜 ${d.style_axis}／100，越右越風土" title="風格光譜 ${d.style_axis}/100"><i style="left:${d.style_axis}%"></i></span>`
     : '<span></span>';
+
   return `
-    <article class="card${isFeat ? ' card--feature' : ''}"
+    <article class="card card--label"
              role="listitem" tabindex="0"
-             data-id="${d.id}" data-type="${d.type}" data-group="${meta.group}" data-category="${d.category}">
-      <div class="card__img" style="background:${esc(d.color_hex || '#ECE8E0')}">
-        <img ${imgAttrs} decoding="async" alt="" sizes="${sizes}" srcset="${srcset}" src="${img}" />
-      </div>
-      <div class="card__cap">
-        <p class="card__name">${esc(d.name_zh)}</p>
-        <p class="card__meta">${sub}</p>
+             data-id="${d.id}" data-type="${d.type}" data-group="${meta.group}" data-category="${d.category}"
+             style="--swatch:${swatch}">
+      <div class="card__plate">
+        <span class="card__spine" aria-hidden="true"></span>
+        <span class="card__wax" role="img" aria-label="${esc(d.type_zh)}色標"></span>
+        <p class="card__producer">${esc(d.producer)}</p>
+        <p class="card__name-zh">${esc(d.name_zh)}</p>
+        <h3 class="card__name" lang="en">${esc(d.name_en)}</h3>
+        <span class="card__rule" aria-hidden="true"></span>
+        <p class="card__vintage">${esc(vintage)}</p>
+        <p class="card__meta">${flag ? `<span class="card__flag" role="img" aria-label="${esc(d.country_zh || d.country)}">${flag}</span> ` : ''}${esc(d.region)} · ${esc(d.varietal)}</p>
+        ${grade ? `<p class="card__grade"><span>${esc(grade)}</span></p>` : ''}
         <div class="card__foot">${rating}${axis}</div>
       </div>
     </article>`;
@@ -240,7 +257,13 @@ function openModal(d, { push = true } = {}) {
           <span class="modal-buy__unit">／瓶${d.price_estimated ? '（推估）' : ''}</span>
         </div>
         ${buyLines.length ? `<div class="modal-buy__lines">${buyLines.map(l => `<span>${l}</span>`).join('')}</div>` : ''}
-      </div>` : '';
+      </div>`
+    // 還沒購入（例：課程品飲）→ 只給市場行情參考，不假裝有購入價
+    : (d.market_price_twd ? `
+      <div class="modal-buy modal-buy--ref">
+        <div class="modal-buy__lines"><span>市場行情參考 ${esc(d.market_price_twd)}</span></div>
+      </div>` : '');
+  const priceHeading = d.price != null ? '購入 / Acquired' : '價格參考 / Price';
 
   // 評分點：支援小數（如 3.8 → 第 4 顆點填 80%）
   const ratingDots = val => Array.from({ length: 5 }, (_, n) => {
@@ -274,16 +297,23 @@ function openModal(d, { push = true } = {}) {
         </dl>
       </div>` : '';
 
-  // 知識區塊：品種／產區／分級／酒莊／入門／背景（皆為事實、非個人評價）
+  // 長文以空行（\n\n）分段 → 多個 <p>，避免知識區塊變成一大坨
+  const proseBlocks = txt => txt
+    ? String(txt).split(/\n{2,}/).map(p => p.trim()).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('')
+    : '';
+
+  // 知識區塊：品種／產區／釀法／分級／酒莊／入門／背景／品飲練習（皆為事實、非個人評價）
   const knowSection = [
     ['品種小知識', 'About the Grape', d.varietal_note],
     ['產區風土', 'The Region', d.region_note],
+    ['釀法', 'Winemaking', d.vinification_note],
     ['產區分級', 'Classification', d.classification_note],
     ['酒莊', 'The Producer', d.producer_note],
     ['為什麼好入門', 'Easy to Love', d.why_beginner],
     ['深入認識', 'Background', d.background],
+    ['品飲練習', 'How to Taste', d.tasting_focus],
   ].filter(([, , v]) => v)
-   .map(([zh, en, v]) => `<div class="modal-section"><h3>${esc(zh)} / ${esc(en)}</h3><p>${esc(v)}</p></div>`)
+   .map(([zh, en, v]) => `<div class="modal-section"><h3>${esc(zh)} / ${esc(en)}</h3>${proseBlocks(v)}</div>`)
    .join('');
 
   const axisTier = styleAxisTier(d.style_axis);
@@ -308,6 +338,18 @@ function openModal(d, { push = true } = {}) {
     ? `<p>${esc(txt)}</p>`
     : `<p class="modal-empty-note">待品飲 · 尚未落筆</p>`;
 
+  // 看點 / Highlights — 上方亮點導讀（3–5 條短句）
+  const highlightsBlock = (d.highlights && d.highlights.length) ? `
+      <div class="modal-section modal-highlights">
+        <h3>看點 / Highlights</h3>
+        <ul class="modal-highlights__list">${d.highlights.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
+      </div>` : '';
+
+  // 外觀 / Appearance — 與香氣／口感／尾韻同屬品飲區
+  const appearanceSection = d.appearance
+    ? `<div class="modal-section"><h3>外觀 / Appearance</h3><p>${esc(d.appearance)}</p></div>`
+    : '';
+
   inner.innerHTML = `
     <div class="modal-media"><img alt="${esc(d.name_zh)} 的酒杯" decoding="async" width="1100" height="1400" src="${photoFor(d, 1100, 1400)}" /></div>
     <div class="modal-info">
@@ -329,9 +371,11 @@ function openModal(d, { push = true } = {}) {
           </div>`).join('')}
       </div>
 
-      ${priceBlock ? `<div class="modal-section"><h3>購入 / Acquired</h3>${priceBlock}</div>` : ''}
+      ${highlightsBlock}
+      ${priceBlock ? `<div class="modal-section"><h3>${priceHeading}</h3>${priceBlock}</div>` : ''}
       <div class="modal-section"><h3>評分 / Rating</h3>${ratingMarkup}</div>
       ${axisSection}
+      ${appearanceSection}
       <div class="modal-taste">
         <div class="modal-section"><h3>香氣 / Aroma</h3>${chips(d.aroma)}</div>
         <div class="modal-section"><h3>口感 / Palate</h3>${chips(d.palate)}</div>
