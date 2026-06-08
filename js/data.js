@@ -28,6 +28,7 @@
 export const drinks = [
   {
     id: 'pinot-nero-eppan',
+    region_key: 'trentino-alto-adige',
     category: 'wine',
     type: 'red',
     type_zh: '紅酒',
@@ -75,6 +76,7 @@ export const drinks = [
   },
   {
     id: 'barbera-nizza-carretta',
+    region_key: 'piemonte',
     category: 'wine',
     type: 'red',
     type_zh: '紅酒',
@@ -122,6 +124,7 @@ export const drinks = [
   },
   {
     id: 'arneis-cayega-carretta',
+    region_key: 'piemonte',
     category: 'wine',
     type: 'white',
     type_zh: '白酒',
@@ -169,6 +172,7 @@ export const drinks = [
   },
   {
     id: 'lambrusco-grasparossa-tradizione',
+    region_key: 'emilia-romagna',
     category: 'wine',
     type: 'sparkling-red',
     type_zh: '氣泡紅酒',
@@ -216,6 +220,7 @@ export const drinks = [
   },
   {
     id: 'lambrusco-spiriti-folletti',
+    region_key: 'emilia-romagna',
     category: 'wine',
     type: 'sparkling-red',
     type_zh: '氣泡紅酒',
@@ -264,6 +269,7 @@ export const drinks = [
   },
   {
     id: 'lambrusco-cella',
+    region_key: 'emilia-romagna',
     category: 'wine',
     type: 'sparkling-red',
     type_zh: '氣泡紅酒',
@@ -311,6 +317,7 @@ export const drinks = [
   },
   {
     id: 'cave-mont-blanc-blanc-du-blanc',
+    region_key: 'valle-aosta',
     category: 'wine',
     type: 'sparkling-white',
     type_zh: '氣泡白',
@@ -367,6 +374,7 @@ export const drinks = [
   },
   {
     id: 'grosjean-petite-arvine-rovettaz',
+    region_key: 'valle-aosta',
     category: 'wine',
     type: 'white',
     type_zh: '白酒',
@@ -423,6 +431,7 @@ export const drinks = [
   },
   {
     id: 'elena-walch-lagrein',
+    region_key: 'trentino-alto-adige',
     category: 'wine',
     type: 'red',
     type_zh: '紅酒',
@@ -503,3 +512,84 @@ export function styleAxisTier(v) {
   if (v <= 78) return { zh: '偏風土',   en: 'Leans Terroir' };
   return { zh: '風土個性', en: 'Terroir' };
 }
+
+// ============================================================
+// 義大利 20 個葡萄酒產區（事實/參考資料，已查證）
+// 「產區地圖」用：每支酒的 region_key 連到這張表；未收藏的產區也能顯示代表酒。
+// zone：North / Central / South / Islands（標準酒業 4 區慣例；顯示時南部與離島併為一組）。
+// grapes 代表品種、wines 代表酒/法定產區、note 一句話新手導覽。
+// 新增義大利酒時：給酒一個 region_key 對應這裡的 key 即可自動上表。
+// ============================================================
+export const ITALY_REGIONS = [
+  // —— 北部 North（8）——
+  { key: 'piemonte', name_en: 'Piedmont', name_it: 'Piemonte', name_zh: '皮埃蒙特', zone: 'North',
+    grapes: ['Nebbiolo', 'Barbera', 'Moscato'], wines: ['Barolo', 'Barbaresco', 'Barbera d\'Alba'],
+    note: '義大利紅酒王國，Barolo 被稱「酒中之王」；新手可先試單寧較柔、果香飽滿的 Barbera。' },
+  { key: 'valle-aosta', name_en: 'Valle d\'Aosta', name_it: 'Valle d\'Aosta', name_zh: '瓦萊達奧斯塔', zone: 'North',
+    grapes: ['Prié Blanc', 'Petit Rouge', 'Fumin'], wines: ['Blanc de Morgex', 'Torrette'],
+    note: '義大利最小、最高海拔的阿爾卑斯山產區；高山清爽白酒與柔順紅酒為主。' },
+  { key: 'trentino-alto-adige', name_en: 'Trentino-Alto Adige', name_it: 'Trentino-Alto Adige', name_zh: '上阿迪杰', zone: 'North',
+    grapes: ['Pinot Grigio', 'Gewürztraminer', 'Lagrein'], wines: ['Alto Adige DOC', 'Trentodoc', 'Teroldego'],
+    note: '阿爾卑斯高山白酒天堂，乾淨純淨；清爽 Pinot Grigio 或花香 Gewürztraminer 入門。' },
+  { key: 'emilia-romagna', name_en: 'Emilia-Romagna', name_it: 'Emilia-Romagna', name_zh: '艾米利亞-羅馬涅', zone: 'North',
+    grapes: ['Lambrusco', 'Sangiovese', 'Albana'], wines: ['Lambrusco di Sorbara', 'Romagna Sangiovese'],
+    note: '美食之鄉，微甜微氣泡紅酒 Lambrusco 最親民，配義式火腿起司一流。' },
+  { key: 'veneto', name_en: 'Veneto', name_it: 'Veneto', name_zh: '威尼托', zone: 'North',
+    grapes: ['Glera', 'Corvina', 'Garganega'], wines: ['Prosecco', 'Amarone', 'Soave'],
+    note: '出口量最大的產區，從氣泡到濃郁紅酒全包；入門首選人人愛的 Prosecco。' },
+  { key: 'friuli', name_en: 'Friuli-Venezia Giulia', name_it: 'Friuli-Venezia Giulia', name_zh: '弗留利', zone: 'North',
+    grapes: ['Friulano', 'Ribolla Gialla', 'Pinot Grigio'], wines: ['Collio', 'Friuli DOC'],
+    note: '義大利頂級白酒產地（八成以上是白酒）；想喝乾淨花香白酒可從 Friulano 入門。' },
+  { key: 'lombardia', name_en: 'Lombardy', name_it: 'Lombardia', name_zh: '倫巴第', zone: 'North',
+    grapes: ['Chardonnay', 'Pinot Nero', 'Nebbiolo'], wines: ['Franciacorta', 'Valtellina', 'Oltrepò Pavese'],
+    note: '傳統法氣泡酒重鎮；想喝氣泡選香檳工法的 Franciacorta，紅酒試山區的 Valtellina。' },
+  { key: 'liguria', name_en: 'Liguria', name_it: 'Liguria', name_zh: '利古里亞', zone: 'North',
+    grapes: ['Vermentino', 'Pigato', 'Rossese'], wines: ['Cinque Terre', 'Rossese di Dolceacqua'],
+    note: '地中海沿岸小產區，清爽帶鹹礦感的白酒聞名；配海鮮首選 Vermentino。' },
+  // —— 中部 Central（5）——
+  { key: 'toscana', name_en: 'Tuscany', name_it: 'Toscana', name_zh: '托斯卡尼', zone: 'Central',
+    grapes: ['Sangiovese', 'Vernaccia', 'Cabernet'], wines: ['Chianti Classico', 'Brunello di Montalcino', 'Vino Nobile'],
+    note: '最知名紅酒產區，山吉歐維榭釀的 Chianti 酸櫻桃清爽好搭餐，是入門首選。' },
+  { key: 'abruzzo', name_en: 'Abruzzo', name_it: 'Abruzzo', name_zh: '阿布魯佐', zone: 'Central',
+    grapes: ['Montepulciano', 'Trebbiano', 'Pecorino'], wines: ['Montepulciano d\'Abruzzo', 'Cerasuolo d\'Abruzzo'],
+    note: 'Montepulciano d\'Abruzzo 果香飽滿、單寧柔、價格實惠，新手最易上手的義大利紅酒。' },
+  { key: 'marche', name_en: 'Marche', name_it: 'Marche', name_zh: '馬爾凱', zone: 'Central',
+    grapes: ['Verdicchio', 'Montepulciano', 'Sangiovese'], wines: ['Verdicchio dei Castelli di Jesi', 'Rosso Conero'],
+    note: '白葡萄 Verdicchio 聞名，酸度清爽帶礦石與杏仁尾韻，CP 值高、好配海鮮。' },
+  { key: 'umbria', name_en: 'Umbria', name_it: 'Umbria', name_zh: '翁布里亞', zone: 'Central',
+    grapes: ['Sagrantino', 'Grechetto', 'Sangiovese'], wines: ['Montefalco Sagrantino', 'Orvieto'],
+    note: '唯一不靠海的中部產區；清爽白酒試 Orvieto，重口味單寧挑戰超濃的 Sagrantino。' },
+  { key: 'lazio', name_en: 'Lazio', name_it: 'Lazio', name_zh: '拉吉歐', zone: 'Central',
+    grapes: ['Malvasia', 'Trebbiano', 'Cesanese'], wines: ['Frascati', 'Cesanese del Piglio'],
+    note: '羅馬所在地，好入口的 Frascati 白酒清爽日常、價格親民；紅酒找本地的 Cesanese。' },
+  // —— 南部 South（5）——
+  { key: 'campania', name_en: 'Campania', name_it: 'Campania', name_zh: '坎帕尼亞', zone: 'South',
+    grapes: ['Aglianico', 'Fiano', 'Greco'], wines: ['Taurasi', 'Fiano di Avellino', 'Greco di Tufo'],
+    note: '南義最有深度的產區，紅酒看「南部的 Barolo」Taurasi，白酒試清爽的 Greco di Tufo。' },
+  { key: 'puglia', name_en: 'Puglia', name_it: 'Puglia', name_zh: '普利亞', zone: 'South',
+    grapes: ['Primitivo', 'Negroamaro'], wines: ['Primitivo di Manduria', 'Salice Salentino'],
+    note: '「鞋跟」陽光產區、CP 值極高；Primitivo（即加州 Zinfandel）果醬甜潤，新手最好上手。' },
+  { key: 'basilicata', name_en: 'Basilicata', name_it: 'Basilicata', name_zh: '巴西利卡塔', zone: 'South',
+    grapes: ['Aglianico'], wines: ['Aglianico del Vulture'],
+    note: '幾乎只有一張王牌：火山土上的 Aglianico，結構厚實耐陳，南義硬派紅酒代表。' },
+  { key: 'calabria', name_en: 'Calabria', name_it: 'Calabria', name_zh: '卡拉布里亞', zone: 'South',
+    grapes: ['Gaglioppo'], wines: ['Cirò'],
+    note: '「鞋尖」較冷門產區，古老紅葡萄 Gaglioppo 釀的 Cirò 酸度高、帶玫瑰菸草香。' },
+  { key: 'molise', name_en: 'Molise', name_it: 'Molise', name_zh: '莫利塞', zone: 'South',
+    grapes: ['Tintilia', 'Montepulciano', 'Aglianico'], wines: ['Tintilia del Molise', 'Biferno'],
+    note: '義大利第二小、低調的產區，招牌是本地獨有品種 Tintilia，辛香紮實的紅酒。' },
+  // —— 離島 Islands（2）——
+  { key: 'sicilia', name_en: 'Sicily', name_it: 'Sicilia', name_zh: '西西里', zone: 'Islands',
+    grapes: ['Nero d\'Avola', 'Nerello Mascalese', 'Grillo'], wines: ['Etna Rosso', 'Cerasuolo di Vittoria', 'Marsala'],
+    note: '近年最熱門的島嶼產區；紅酒從飽滿 Nero d\'Avola 入門，進階試 Etna 火山的礦感紅酒。' },
+  { key: 'sardegna', name_en: 'Sardinia', name_it: 'Sardegna', name_zh: '薩丁尼亞', zone: 'Islands',
+    grapes: ['Cannonau', 'Vermentino', 'Carignano'], wines: ['Vermentino di Gallura', 'Cannonau di Sardegna'],
+    note: '地中海大島，白酒首選 Vermentino 清爽帶柑橘鹹味；紅酒 Cannonau（即格那希）溫暖好入口。' },
+];
+
+// 顯示分組：北 / 中 / 南＋離島（尊重「北中南」，離島併入南部一組但仍各自列出）
+export const ITALY_ZONE_GROUPS = [
+  { key: 'north',   it: 'Nord',        zh: '北部',      en: 'North',            zones: ['North'] },
+  { key: 'central', it: 'Centro',      zh: '中部',      en: 'Central',          zones: ['Central'] },
+  { key: 'south',   it: 'Sud · Isole', zh: '南部 · 離島', en: 'South & Islands', zones: ['South', 'Islands'] },
+];

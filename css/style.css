@@ -327,6 +327,47 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 @media (max-width: 760px) { .about { grid-template-columns: 1fr; gap: 2.5rem; } .about__img { aspect-ratio: 16/10; } }
 
 /* ============================================================
+   REGIONS — Italy exploration ledger（分區清單）
+   ============================================================ */
+.regions__summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 1rem 2rem; margin-top: 1.8rem; }
+.regions__stat { font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
+.regions__stat b { font-family: var(--f-display); font-style: italic; font-size: 1.5rem; letter-spacing: 0; color: var(--wine); margin-right: 0.4rem; }
+.regions__stat--mute b { color: var(--ink-soft); }
+.regions__legend { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--f-ui); font-size: 10.5px; letter-spacing: 0.08em; color: var(--mute); margin-left: auto; }
+.regions__legend .region__mark { margin: 0 0.2rem 0 0.8rem; }
+
+.regions__zones { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem);
+  max-width: var(--max-w); margin: 0 auto; padding: clamp(1rem, 2vw, 2rem) var(--gut-x) var(--pad-y); }
+@media (max-width: 920px) { .regions__zones { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+.regions__zone-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding-bottom: 0.8rem; border-bottom: 1px solid var(--line-2); margin-bottom: 0.2rem; }
+.regions__zone-head h3 { font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; color: var(--ink); margin: 0; letter-spacing: 0.02em; }
+.regions__zone-head h3 em { font-family: var(--f-sans-tc); font-style: normal; font-size: 0.8rem; color: var(--mute); margin-left: 0.5rem; }
+.regions__zone-count { font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.08em; color: var(--mute); white-space: nowrap; }
+.regions__zone-count b { font-family: var(--f-display); font-style: italic; font-size: 1.1rem; color: var(--bronze-text); margin-right: 0.05rem; }
+
+.regions__list { list-style: none; margin: 0; padding: 0; }
+.region { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.55rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+.region:last-child { border-bottom: 0; }
+.region__mark { flex: none; width: 1rem; text-align: center; font-style: normal; line-height: 1; }
+.region__mark--tasted { color: var(--wine); }
+.region__mark--cellar { color: var(--bronze); }
+.region__mark--unexplored { color: var(--line-2); }
+.region__name { font-family: var(--f-display); font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.01em; }
+.region__name em { font-family: var(--f-sans-tc); font-style: normal; font-weight: 300; font-size: 0.74rem; color: var(--mute); margin-left: 0.5rem; letter-spacing: 0.02em; }
+.region--unexplored .region__name { color: var(--ink-soft); }
+.region__hint, .region__wines { flex-basis: 100%; padding-left: 1.55rem; }
+.region__hint { font-family: var(--f-serif-tc); font-weight: 300; font-size: 0.85rem; color: var(--mute); }
+.region__wines { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.45rem; }
+.region__chip { font-family: var(--f-serif-tc); font-size: 0.82rem; line-height: 1; color: var(--ink-soft);
+  background: transparent; border: 1px solid var(--line-2); border-radius: 999px; padding: 0.34rem 0.72rem; cursor: pointer;
+  max-width: 18ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: border-color var(--t-quick) var(--e-soft), color var(--t-quick) var(--e-soft); }
+.region__chip:hover, .region__chip:focus-visible { border-color: var(--wine); color: var(--wine); outline: none; }
+.region--tasted .region__chip { border-color: rgba(110,26,31,0.32); }
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .footer { max-width: var(--max-w); margin: 0 auto; padding: clamp(3rem, 6vw, 5rem) var(--gut-x); border-top: 1px solid var(--line); }
@@ -449,7 +490,7 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 .chart__axis-ends span:last-child { text-align: right; }
 .chart__axis-ends i { display: block; font-style: normal; font-size: 8px; color: var(--bronze-text); margin-top: 2px; }
 .chart__axis-rows { display: flex; flex-direction: column; gap: 0.55rem; }
-.chart__axis .row { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 1rem; font-family: var(--f-ui); font-size: 0.78rem; }
+.chart__axis .row { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 1rem; font-family: var(--f-ui); font-size: 0.78rem; }
 .chart__axis .row .label { color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .chart__axis .track { position: relative; height: 1px; background: var(--line); }
 .chart__axis .track::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--line); }

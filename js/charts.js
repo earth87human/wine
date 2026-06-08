@@ -182,7 +182,7 @@ function renderRatingChart(drinks) {
 function renderVarietalChart(drinks) {
   const counts = {};
   drinks.forEach(d => {
-    const key = d.varietal_zh || d.varietal;
+    const key = d.varietal;  // 內容用義大利文品種名（非中文）
     counts[key] = (counts[key] || 0) + 1;
   });
   const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
@@ -225,9 +225,9 @@ function renderStyleChart(drinks) {
   const rows = items.map((d, i) => {
     const v = d.style_axis;
     const tier = styleAxisTier(v);
-    const short = (d.name_zh || d.name_en || '').split(' ')[0];
+    const short = d.name_en || d.name_zh || '';  // 內容用義大利文酒名（非中文）
     return `
-      <div class="row" title="${esc(d.name_zh)} — ${esc(tier.zh)}（${v}/100）">
+      <div class="row" title="${esc(d.name_en)} · ${esc(tier.zh)}（${v}/100）">
         <span class="label">${esc(short)}</span>
         <div class="track">
           <div class="fill" data-w="${v}%" style="transition-delay:${i * 70}ms;"></div>

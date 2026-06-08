@@ -1,6 +1,7 @@
 import { drinks, typeMeta, styleAxisTier, STYLE_AXIS_ENDS } from './data.js';
 import { setupReveal, setupNav, animateCounter, hideLoader, setupCinema } from './animations.js';
 import { renderCharts } from './charts.js';
+import { renderRegions } from './regions.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -495,7 +496,16 @@ function init() {
   renderFilters();
   renderGrid();
   renderCharts(drinks, typeMeta);
+  renderRegions(drinks);
   revealImages();
+
+  // 產區地圖：點產區裡的酒款 chip → 開該支酒的 modal（沿用現有 modal）
+  $('#regions-zones')?.addEventListener('click', e => {
+    const chip = e.target.closest('[data-wine-id]');
+    if (!chip) return;
+    const d = drinks.find(x => x.id === chip.dataset.wineId);
+    if (d) openModal(d);
+  });
 
   $('#grid-empty')?.addEventListener('click', e => {
     const b = e.target.closest('[data-filter]');

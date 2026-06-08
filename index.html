@@ -47,6 +47,7 @@
     <a href="#hero" class="nav__logo" lang="en">Tasting&nbsp;Notes</a>
     <ul class="nav__menu">
       <li><a href="#collection" data-link>收藏</a></li>
+      <li><a href="#regions" data-link>產區</a></li>
       <li><a href="#stats" data-link>數據</a></li>
       <li><a href="#about" data-link>關於</a></li>
     </ul>
@@ -102,6 +103,17 @@
       <p class="grid__empty-sub">清單還很短，慢慢長 —— 先看看<button type="button" class="as-link" data-filter="all">全部</button>吧。</p>
     </div>
     <p id="grid-count" class="sr-only" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- ===== REGIONS — Italy exploration ledger ===== -->
+  <section class="regions" id="regions" tabindex="-1">
+    <header class="opener reveal">
+      <div class="opener__eyebrow">Around Italy</div>
+      <h2 class="opener__title">產區地圖</h2>
+      <p class="opener__sub">義大利 20 區，分北、中、南＋離島。看看走到哪了，還有哪些等著探索。</p>
+      <div class="regions__summary" id="regions-summary"></div>
+    </header>
+    <div class="regions__zones" id="regions-zones"></div>
   </section>
 
   <!-- ===== INTERSTITIAL — breathing band ===== -->
@@ -169,6 +181,7 @@
       <a href="#hero" class="footer__logo" lang="en">Tasting&nbsp;Notes</a>
       <nav class="footer__nav">
         <a href="#collection">收藏</a>
+        <a href="#regions">產區</a>
         <a href="#stats">數據</a>
         <a href="#about">關於</a>
       </nav>
