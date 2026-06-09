@@ -370,8 +370,18 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 .producer__region { font-family: var(--f-display); font-style: italic; font-size: 0.82rem; color: var(--bronze-text); }
 .producer__count { font-family: var(--f-ui); font-size: 10px; letter-spacing: 0.1em; color: var(--mute); white-space: nowrap; }
 
-/* 酒莊 modal：無圖、單欄滿版置中；酒款 chip 帶評分小標 */
+/* 酒莊 modal：頂部 banner 圖 + 單欄滿版置中；酒款 chip 帶評分小標 */
+.modal-banner { grid-column: 1 / -1; overflow: hidden; background: var(--paper-2); }
+.modal-banner img { display: block; width: 100%; height: clamp(180px, 26vw, 300px); object-fit: cover; object-position: center; }
 .modal-info--solo { grid-column: 1 / -1; max-width: 820px; margin-inline: auto; }
+.modal-info--solo .modal-info__head { padding-top: 0; }
+
+/* 名酒與必喝 — 帶銅色菱點的清單 */
+.producer-signature { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.05rem; }
+.producer-signature li { position: relative; padding-left: 1.3rem; }
+.producer-signature li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; background: var(--bronze); transform: rotate(45deg); }
+.producer-signature__name { display: block; font-family: var(--f-display); font-weight: 400; font-size: 1.04rem; color: var(--ink); letter-spacing: 0.01em; margin-bottom: 0.2rem; }
+.producer-signature__note { display: block; font-family: var(--f-serif-tc); font-weight: 300; font-size: 0.9rem; line-height: 1.65; color: var(--ink-soft); max-width: 58ch; }
 .modal-info__producer--link { background: transparent; border: 0; padding: 0; cursor: pointer; color: var(--bronze-text); transition: color var(--t-quick) var(--e-soft); }
 .modal-info__producer--link:hover, .modal-info__producer--link:focus-visible { color: var(--wine); outline: none; }
 .region__wines--modal { display: flex; flex-wrap: wrap; gap: 0.5rem; }

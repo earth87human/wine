@@ -656,34 +656,143 @@ export const ITALY_ZONE_GROUPS = [
 // 酒莊（producer）參考表 — 給「產區地圖」的酒莊檢視與酒莊 modal 用。
 // key = wine.producer 字串（直接 join）；story 是把同莊各酒的 producer_note
 //   合併去重後的「莊級」簡介（事實敘述、不含個人評分）。
-// founded / place / tagline 皆可選，缺了就不顯示。
+// founded / place / tagline / owner / image 皆可選，缺了就不顯示。
+// story 為莊級豐富敘事（歷史＋文化特色＋地位，用空行分段）；signature 為該莊名酒/必喝（事實，不含個人評分）。
+// image = Unsplash CDN 的 photo-id（已 curl 驗證可載入）。
 // 新增義大利酒時：給酒一個 producer 字串對到這裡的 key 即可自動上莊。
 // ============================================================
 export const PRODUCERS = [
-  { key: 'St. Michael-Eppan', name_zh: '聖米歇爾-艾本', region_key: 'trentino-alto-adige',
+  {
+    key: 'St. Michael-Eppan', name_zh: '聖米歇爾-艾本', region_key: 'trentino-alto-adige',
     founded: '1907', place: 'Eppan, 上阿迪杰', type: '合作社', tagline: '上阿迪杰黑皮諾名家',
-    story: '聖米歇爾-艾本是上阿迪杰最受敬重的合作社酒莊之一，1907 年創立，由三百多位酒農、近 385 公頃葡萄園組成。曾被 Gambero Rosso／Slow Food《義大利葡萄酒指南》選為「2000 年度最佳義大利酒莊」，以細膩優雅著稱，是公認義大利最會做黑皮諾的產區裡的代表性名莊。' },
-  { key: 'Tenuta Carretta', name_zh: '卡蕾塔', region_key: 'piemonte',
+    owner: '艾本葡農合作社', image: 'photo-1642872664566-e130139d0f77',
+    story: `聖米歇爾-艾本（St. Michael-Eppan，義大利文 San Michele Appiano）是上阿迪杰（Alto Adige／南提洛 Südtirol）最具份量的酒莊之一，1907 年由艾本鎮（Appiano）27 位有遠見的葡萄農合資創立。當年他們的想法很單純：與其各自賣便宜散酒，不如集合眾人之力、共同提升品質。一個多世紀後，這間合作社已成長為約 320 戶葡萄農家族、約 390 公頃葡萄園、年產逾兩百萬瓶的規模。村名「Eppan／Appiano」源自古羅馬執政官 Appius，這段拉丁血脈日後也成了酒莊頂級旗艦酒「Appius」名字的由來。
+
+合作社的故事，幾乎與一個人畫上等號——傳奇釀酒師 Hans Terzer。他 1977 年起掌管釀造，將一間地方合作社一路帶上義大利與國際舞台，被 Gambero Rosso 列入「全球十大釀酒師」。他是上阿迪杰最早大膽種下 Sauvignon Blanc 與 Chardonnay 的先驅之一，幾乎憑一己之力定義了今日世人對南提洛白酒的印象，因而有「Mr. Sauvignon」的稱號。酒莊哲學核心是「風土的純粹表達」：頂級酒只取海拔約 450 至 600 公尺、礫石與石灰岩土壤的精選地塊，低產量、手工分選，讓阿爾卑斯山腳的日夜溫差化為酒中鮮明的礦物張力與酸度。2024 年 Terzer 交棒給年輕釀酒師 Jakob Gasser。
+
+它的頂級酒系列「Sanct Valentin」創立於 1986 年，是南提洛「山地白酒」優雅與陳年潛力的標竿。酒莊 2000 年獲選 Gambero Rosso 年度酒莊，更因連續 30 次拿下最高榮譽「Tre Bicchieri（三隻酒杯）」，於 2018 年成為首間獲頒 Gambero Rosso「三顆星」殊榮的南提洛酒莊——是「合作社也能釀出頂級酒」的最佳範例。`,
+    signature: [
+      { name: `Sauvignon Sanct Valentin Alto Adige DOC`, note: `酒莊與 Hans Terzer 的招牌之作，產自礫石石灰岩坡地，接骨木花、醋栗與礦物張力交織，是南提洛 Sauvignon 的標竿。` },
+      { name: `Appius Alto Adige DOC`, note: `膜拜級旗艦白酒 cuvée（Terzer 親手調配），每年限量約 7,000 瓶、逐瓶編號、年年換藝術酒標，是收藏家追逐的夢幻酒。` },
+      { name: `Weissburgunder (Pinot Bianco) Sanct Valentin`, note: `把白皮諾釀成有重量的頂級酒，木桶培養帶來力量與飽滿，又保有清晰礦物收尾。` },
+      { name: `Gewürztraminer Sanct Valentin`, note: `玫瑰、荔枝與異國香料奔放卻不甜膩、平衡有礦物感，是領略上阿迪杰芳香白酒的名作。` },
+      { name: `Pinot Nero Riserva Sanct Valentin`, note: `展現酒莊紅酒實力，山地黑皮諾的細緻紅果與優雅單寧。` },
+    ],
+  },
+  {
+    key: 'Tenuta Carretta', name_zh: '卡蕾塔', region_key: 'piemonte',
     founded: '1467', place: 'Piobesi d\'Alba, Roero', type: '家族莊', tagline: '皮埃蒙特最古老酒莊之一',
-    story: '卡蕾塔酒莊的歷史可追溯到 1467 年一份提及「cassina Careta」的契約，是皮埃蒙特、乃至義大利歷史最悠久的酒莊之一，莊園位於阿爾巴近郊羅埃羅產區的 Piobesi d\'Alba。1985 年起由阿爾巴的 Miroglio 家族接手經營至今，強調風土表現；在白酒（阿內斯）與紅酒（巴貝拉）都有代表作。' },
-  { key: 'Tenuta Pederzana', name_zh: '佩德札納', region_key: 'emilia-romagna',
+    owner: 'Miroglio 家族', image: 'photo-1602491399262-55831860b387',
+    story: `坐落於皮埃蒙特 Roero 產區、阿爾巴（Alba）西北方塔納羅河左岸的 Piobesi d'Alba，Tenuta Carretta 是義大利最古老、且持續釀酒至今的酒莊之一。莊園歷史可追溯至 1467 年 11 月 28 日的一紙佃租契約。酒莊之名「Carretta／Careta」更早源於 14 世紀一位阿爾巴貴族女子 Careta Costanzi。此後莊園歷經數百年易主，直到 1985 年由阿爾巴知名紡織集團 Miroglio 家族買下並重建，開啟現代篇章。
+
+文化上，Carretta 最動人的角色，是它在「Arneis 復興」中的份量。Roero 的白葡萄 Arneis（俗稱「白內比歐露」）20 世紀中葉幾乎絕跡，Carretta 正是讓它重生最重要的推手之一。如今它以三款 Arneis 詮釋此品種：親民的 Cayega、橡木桶發酵的 Canorei、久放酒泥的 Alteno della Fontana Riserva。釀造強調可持續耕作、手工採收，並把 15 世紀古窖與莊園悉心修復。
+
+Carretta 最罕見的優勢，是幾乎握有 Nebbiolo 所有經典原鄉的園地。約 80 公頃葡萄園橫跨 Langhe 與 Roero（2014 年入選 UNESCO 世界遺產），讓它能同時釀出 Barolo、Barbaresco、Roero 與 Nebbiolo d'Alba。其中最受矚目的，是它在 Barolo 最負盛名的古老單一園 Cannubi 山坡上擁有約 2.6 公頃葡萄——全球僅約二十家酒莊掛得上 Cannubi 之名。莊園內更設有米其林一星餐廳與精品酒店，是探訪皮埃蒙特兼具歷史厚度與享受的代表。`,
+    signature: [
+      { name: `Roero Arneis DOCG "Cayega"`, note: `酒莊年產逾十萬瓶的招牌白酒，花香、洋槐蜜與淡淡熱帶果香，是認識 Roero Arneis 最經典親民的入門款（也是你收的這支）。` },
+      { name: `Barolo DOCG "Cannubi"`, note: `來自 Barolo 最古老頂級的傳奇單一園 Cannubi，優雅、有骨架且極耐陳年，是酒莊皇冠上的明珠。` },
+      { name: `Barbaresco DOCG "Cascina Bordino" Riserva`, note: `Treiso 陡坡砂質土的 Nebbiolo，陳釀逾 50 個月，香氣細膩、結構綿長。` },
+      { name: `Roero DOCG "Bric Paradiso" Riserva`, note: `Roero 紅酒的標竿之作，最能代表 Roero 砂土孕育 Nebbiolo 的柔美與芳香。` },
+      { name: `Roero Arneis Riserva "Canorei"`, note: `橡木桶發酵陳放的進階版 Arneis，展現此品種少見的陳年潛力與圓潤質地。` },
+    ],
+  },
+  {
+    key: 'Tenuta Pederzana', name_zh: '佩德札納', region_key: 'emilia-romagna',
     founded: '', place: 'Castelvetro, Modena', type: '家族小農', tagline: '葛拉斯帕羅薩老品系小農',
-    story: '佩德札納是摩典納卡斯特爾韋特羅一帶的家族小農酒莊，園區位於 Solignano Vecchio 丘陵、規模約十幾公頃，幾乎只種蘭布魯斯科家族裡最深色厚實的葛拉斯帕羅薩，走手工採收、忠於風土的路線。他們甚至保留了一支自家篩選、曾與波隆那大學合作研究的獨特老品系（clone，即從同一株母藤複製出的品系），產量不大。' },
-  { key: 'Fratelli Cella', name_zh: '雀拉', region_key: 'emilia-romagna',
+    owner: 'Gibellini 家族', image: 'photo-1761469309960-9bea46abe2bb',
+    story: `Tenuta Pederzana 的故事要從二戰後的莫德納山丘說起。創辦人 Franco Simonini 是 Castelvetro 一位前衛的葡萄農，他與妻子 Margherita 看中 Solignano Vecchio 緩坡上一塊美麗莊園，並與波隆那大學長期合作，試圖從當地最尊貴的本土品種 Grasparossa di Castelvetro 中，篩選出最優秀的無性繁殖系（clone）。多年後接手酒莊的姪子 Francesco Gibellini 才發現，這支家族世代守護的老株，竟是義大利葡萄栽培實驗研究所登錄名單中獨一無二的存在——這成了酒莊最珍貴的身世。
+
+如今酒莊由 Francesco Gibellini 與叔叔 Massimo 共同經營，是「一間扎根傳統的現代酒莊」。莊園約 14–15 公頃，園區間還夾雜橡木林與泉水小湖，生態完整。黏土質土壤、涼爽夜晚、向東坡向讓葡萄緩慢成熟、累積飽滿色素。他們把那支「世界獨一無二」的古老 Grasparossa 嫁接於 Golia 砧木、Guyot 引枝、每公頃約 4,000 株密植，堅持全程手工採收——對單一風土與單一老株的執著，正是酒莊核心。
+
+在 Lambrusco 世界裡，Grasparossa 一向是色深、單寧最紮實、最有「紅酒感」的一支，而 Pederzana 正是把它推向精緻與深度的代表性小農。他們既做百搭日常的乾型氣泡紅，也在特別年份釀出旗艦 Ubi Maior——甚至用類似 Amarone 的風乾工法處理，是同產區極少見的野心之作。對想認識「乾型、嚴肅版 Lambrusco」的人，這是 Castelvetro 不能略過的名字。`,
+    signature: [
+      { name: `Il Grasparossa della Tradizione`, note: `最經典的入門乾型氣泡紅，深紫紅、櫻桃與李子果香、細緻氣泡與紮實單寧，是認識 Grasparossa「紅酒感 Lambrusco」最好的起點（你收的這支）。` },
+      { name: `Spiriti Folletti (Secco)`, note: `刻意打破「又甜又軟」印象的乾型版本，野草莓、櫻桃與紫羅蘭、酸度俐落尾韻乾爽，配披薩一絕（你收的這支）。` },
+      { name: `Ubi Maior`, note: `酒莊旗艦、整個產區罕見的野心之作：用風乾（appassimento）類 Amarone 工法，桶陳兩年、瓶陳三年，濃縮深厚。` },
+      { name: `Puntamora`, note: `老藤晚收 Grasparossa 加少量 Ancellotta 的微甜（amabile）版本，酒體圓潤、口感柔順、百搭討喜。` },
+    ],
+  },
+  {
+    key: 'Fratelli Cella', name_zh: '雀拉', region_key: 'emilia-romagna',
     founded: '1960', place: 'Campegine, Emilia', type: '量產品牌', tagline: '行銷四十多國的商業蘭布魯斯科',
-    story: 'Fratelli Cella（雀拉）創立於 1960 年，總部在艾米利亞-羅馬涅的 Campegine，是義大利最知名的商業蘭布魯斯科品牌之一，行銷全球四十多國，隸屬大型釀酒合作社聯盟 Cantine Riunite & CIV，走規模化、標準化的量產路線——和同產區的佩德札納小農剛好是兩個極端。' },
-  { key: 'Cave Mont Blanc', name_zh: '白朗峰', region_key: 'valle-aosta',
+    owner: 'Cantine Riunite & CIV', image: 'photo-1774900134488-617fa79809ae',
+    story: `Fratelli Cella 創立於 1960 年，是艾米利亞-羅馬涅最為人熟知的 Lambrusco 品牌之一，根據地在雷焦艾米利亞省的坎佩吉內（Campegine）小鎮。從一開始它就專注於這片土地最具代表性的微氣泡酒 Lambrusco——一種帶輕盈泡沫、酒精度不高、好親近的紅葡萄酒。六十多年來，Cella 把這種原本屬於艾米利亞餐桌的家常酒推向了全世界。
+
+Cella 走的不是自有大莊園路線，而是合作社式、串連在地小農的模式：葡萄主要來自摩德納一帶、由眾多會員酒農細心種植，再以完整的一條龍生產鏈釀製——這讓它能穩定產出風格一致、品質可靠、價格親民的 Lambrusco。如今它隸屬於 Cantine Riunite & CIV 集團（背後約 1,500 戶葡萄農、4,600 公頃葡萄園、年售約 1.4 億瓶），是全世界 Lambrusco 與艾米利亞氣泡酒的龍頭。
+
+在國際舞台上，Cella 行銷超過 40 個國家，在美國、日本與歐洲尤其受歡迎。它成功的秘訣很單純：好喝、酒精度低、帶一點甜，可以輕鬆配甜點或當開胃酒。對剛入門的人來說，Cella 幾乎是認識 Lambrusco 這個酒種最方便、最具代表性的一扇門——和同產區的佩德札納小農，剛好是兩個極端。`,
+    signature: [
+      { name: `Lambrusco dell'Emilia Rosso IGT`, note: `品牌最具代表性的微甜紅氣泡，深紅寶石色帶輕盈泡沫、紅莓與李子香、尾韻一抹櫻桃微苦，是認識 Lambrusco 的經典首選（你收的微甜款近這支風格）。` },
+      { name: `Lambrusco dell'Emilia Rosato IGT`, note: `淡粉紅、活潑泡沫，清新果香帶明顯紫羅蘭花香，清爽討喜、入門者容易愛上。` },
+      { name: `Lambrusco dell'Emilia Bianco IGT`, note: `以 Lambrusco 葡萄釀的白氣泡，清爽果香、柔甜收尾乾淨，想換個輕鬆風味時的熱門選擇。` },
+      { name: `Lambrusco Rosso Amabile dell'Emilia IGT`, note: `半甜版紅 Lambrusco，甜酸平衡、莓果明顯，是超市與日常餐桌上最普及的甜微氣泡入門。` },
+    ],
+  },
+  {
+    key: 'Cave Mont Blanc', name_zh: '白朗峰', region_key: 'valle-aosta',
     founded: '1983', place: 'Morgex, 奧斯塔谷', type: '合作社', tagline: '歐洲最高酒廠（2,173m）',
-    story: 'Cave Mont Blanc 是 1983 年成立的釀酒合作社，位在白朗峰腳下，把約 70 戶高山葡農、合計約 18 公頃葡萄園集結起來，共同守護這片風土。氣泡酒 1986 年首釀只做了約 1,000 瓶，如今年產約 10 萬瓶。最傳奇的是它在海拔 2,173 公尺的纜車站（Pavillon du Mont Fréty）設了酒窖——號稱全歐洲最高的酒廠。' },
-  { key: 'Grosjean', name_zh: '葛羅讓', region_key: 'valle-aosta',
+    owner: '山地酒農合作社', image: 'photo-1765574782003-75d8f507f939',
+    story: `海拔近一千兩百公尺、背倚歐洲最高峰白朗峰的義大利西北角，藏著一座「英雄式」的合作社酒莊——Cave Mont Blanc de Morgex et de La Salle。根源可追溯到 Morgex 本堂神父 Don Bougeat 在 1971 年催生的「葡萄農協會」。1983 年，受阿爾卑斯村莊互助傳統啟發，約 70 戶酒農正式成立合作社，把零散的小塊葡萄園集中、共享資源，讓這片獨一無二的風土被世界看見。創社三年後推出第一個年份，氣泡酒僅一千瓶就一炮而紅；如今年產約十萬至十四萬瓶。
+
+這裡只種一個品種：原生白葡萄 Prié Blanc。它最傳奇之處，是極高海拔與嚴寒讓它躲過了十九世紀橫掃全歐的根瘤蚜，至今仍以「未嫁接」（自根）老藤栽培，是歐洲少數保留原始根系的葡萄。葡萄園散落在 Morgex 與 La Salle、海拔 900 至 1,200 公尺的山坡，全採低矮的「瓦萊達奧斯塔棚架」把藤蔓抬離地面、利用石牆與地熱抵禦霜凍——晚萌芽躲春霜、早熟趕在初雪前採收，是與高山賽跑的栽培哲學。
+
+Cave Mont Blanc 不只「種得高」，更把高度玩成一種實驗精神。它在白朗峰纜車站、海拔 2,173 公尺處設了一座實驗酒窖，與高山嚮導協會合作在此進行瓶中二次發酵、熟成氣泡酒；近年並利用 Cogne 海拔約 1,800 公尺的廢棄磁鐵礦坑，借其恆溫恆濕自然陳年。作為瓦萊達奧斯塔唯一的 DOC 傳統法氣泡酒生產者、也是高山「英雄葡萄酒」的代表，它既守護瀕危原生品種與梯田景觀，也以海拔、冰酒與礦坑陳年成為義大利高山酒最具辨識度的名字之一。`,
+    signature: [
+      { name: `Blanc de Morgex et de La Salle DOC`, note: `招牌基礎款，100% 未嫁接 Prié Blanc、不鏽鋼釀造，清新爽脆帶柑橘與礦物感，是認識歐洲最高葡萄園最入門經典的一支（你收的氣泡即出自此系列）。` },
+      { name: `Cuvée du Prince (Metodo Classico)`, note: `瓦萊達奧斯塔唯一的 DOC 傳統法氣泡代表作，瓶中陳年達 72 個月，氣泡細緻、酸度凌厲帶蘋果蜂蜜。` },
+      { name: `Chaudelune Vin de Glace`, note: `招牌冰酒，葡萄結凍後夜採、以當地木桶釀成，蜜餞杏桃、香草與柑橘交織，是酒莊不可取代的甜酒名片。` },
+      { name: `Cuvée des Guides`, note: `在白朗峰纜車站 2,173m 實驗酒窖二次發酵熟成的氣泡酒，把「歐洲最高酒窖」直接喝進杯中，極具話題與收藏意義。` },
+    ],
+  },
+  {
+    key: 'Grosjean', name_zh: '葛羅讓', region_key: 'valle-aosta',
     founded: '1968', place: 'Quart, 奧斯塔谷', type: '家族莊', tagline: '奧斯塔谷第一家有機認證酒莊',
-    story: '葛羅讓兄弟酒莊（Maison Vigneronne Frères Grosjean）位在奧斯塔谷 Quart 鎮的 Ollignan 小村，是典型的「英雄式高山葡萄種植」（陡坡、人工）。由祖父 Dauphin Grosjean 約 1968 年正式創立，現已傳到第三代。環保走得很早——1975 年起就不噴殺蟲劑，並於 2011 年成為奧斯塔谷第一家通過有機認證的酒莊。' },
-  { key: 'Elena Walch', name_zh: '伊蓮娜·瓦爾希', region_key: 'trentino-alto-adige',
+    owner: 'Grosjean 家族', image: 'photo-1742974549252-ebb75c773e6f',
+    story: `Grosjean 家族與奧斯塔山谷的葡萄藤糾纏已超過四百年。最早可追溯到 1630 年大瘟疫橫掃峽谷後，薩伏依公爵自勃艮第與薩伏依招募農家前來重建，Grosjean 就此落腳，世代於 Valgrisenche 高山牧牛、夏季在較低坡地種葡萄與栗子釀酒度冬。真正的轉捩點在 1960 年代：祖父 Dauphin Grosjean 全心投入釀酒、裝出家族第一批酒，並在 1968 年的奧斯塔葡萄酒展一鳴驚人，點燃五個兒子擴園精進的決心，奠定今日酒莊雛形。
+
+Grosjean 是「英雄式葡萄栽培」最純粹的範本。葡萄園散落在海拔 500 至 900 公尺、坡度逼近 80% 的阿爾卑斯陡坡，全靠人工梯田耕作，每公頃投入高達 700–800 小時勞力，遠超義大利平均——機械幾乎使不上力。家族自 1975 年起停用殺蟲劑、只施有機肥，2011 年更成為奧斯塔山谷第一家全面有機認證的酒莊。釀造倚賴原生酵母、低硫、溫和萃取，骨子裡是讓在地品種誠實說話的自然派思維。他們守護著 Petite Arvine、Fumin、Cornalin、Premetta 等 11 種瀕危原生葡萄，是奧斯塔活生生的品種基因庫。
+
+在義大利最小、最高、最難種的產區之一，Grosjean 是公認的標竿。它以一款 Fumin 紅酒成為奧斯塔山谷史上第一家奪下最高榮譽「Tre Bicchieri（三隻酒杯）」的酒莊，替整個產區打開被看見的大門；近年其白酒 Petite Arvine「Les Frères」再度摘下三杯，紅、白兩線都站在頂端。對想認識阿爾卑斯山葡萄酒的人，Grosjean 幾乎是進入這個冷涼、礦感、品種獨特世界的最佳起點。`,
+    signature: [
+      { name: `Petite Arvine "Les Frères"`, note: `奧斯塔白酒代表作，淡金色、熱帶水果與柑橘香、清爽帶礦石與一抹鹹鮮，近年摘下 Gambero Rosso 三隻酒杯（你收的 Vigne Rovettaz 是同品種的另一園）。` },
+      { name: `Fumin "Vigne Rovettaz"`, note: `酒莊最具歷史意義的紅酒，純原生品種 Fumin、桶陳，深色野莓濃郁、層次豐富單寧柔順，正是讓 Grosjean 拿下奧斯塔首座三隻酒杯的酒。` },
+      { name: `Torrette`, note: `奧斯塔最經典的日常紅酒法定產區，以 Petit Rouge 為主，紅果鮮明爽口親切，認識本地風格的入門必喝。` },
+      { name: `Premetta`, note: `用極稀有原生品種 Premetta 釀的淺色輕紅，蔓越莓與草莓果香、絲滑解渴，Grosjean 是這支瀕危品種最重要的代表釀造者。` },
+    ],
+  },
+  {
+    key: 'Elena Walch', name_zh: '伊蓮娜·瓦爾希', region_key: 'trentino-alto-adige',
     founded: '1869', place: 'Tramin, 上阿迪杰', type: '家族莊', tagline: '南提洛首位女釀酒師的指標名莊',
-    story: '伊蓮娜·瓦爾希（Elena Walch）是上阿迪杰公認的指標酒莊之一，位在 Tramin 小鎮，家族釀酒史溯至 1869 年。靈魂人物 Elena Walch 建築師出身，1985 年成為南提洛第一位女釀酒師，1988 年創立自有品牌，把「風土＋單一園」的現代觀念帶進產區；現由女兒 Julia 與 Karoline 接手（第五代）。旗下有 Castel Ringberg 與 Kastelaz 兩座名園，近年轉型有機、2024 年取得 VIVA 永續認證。' },
-  { key: 'Donnafugata', name_zh: '多娜佳塔', region_key: 'sicilia',
+    owner: 'Walch 家族（第五代）', image: 'photo-1770424683058-e8bdd328a54e',
+    story: `Elena Walch 酒莊坐落於義大利最北端 Alto Adige 的 Tramin（德文 Termeno）小鎮——這裡正是芳香品種 Gewürztraminer（Traminer 一字即源自 Tramin）的歷史故鄉。家族釀酒淵源可上溯至 1869 年，奧地利人 Wilhelm Walch 買下這座建築，而它在此之前曾作為耶穌會修道院近七十年、修士早已在此釀酒。酒窖至今約三百年歷史，仍保存著 1873 年手工雕刻的古老橡木桶。
+
+真正讓這個古老姓氏脫胎換骨的，是 Elena Walch 本人。她原是米蘭執業的建築師，1983 年受第四代莊主 Werner Walch 之邀前來修復家族那座 1620 年文藝復興城堡 Castel Ringberg，兩人因此相戀結婚，Elena 也放下建築投身釀酒。1985 年她成為南提洛史上第一位、也長期是唯一一位女性釀酒師，1988 年創立以己為名的品牌。她以近乎革命性的眼光重塑家業：率先把單一園分開釀造、推出強調風土的「terroir wines」，大膽改種更具潛力的品種、降低產量換品質。她的核心哲學就是「風土」。
+
+如今酒莊由第五代、Elena 的兩個女兒 Julia 與 Karoline 自 2015 年起接掌，園區約 55–60 公頃、年產約五十萬瓶、全程手工採收。兩座招牌單一園是莊園的心臟：Caldaro 湖畔約 20 公頃的 Castel Ringberg（可能是全 Alto Adige 最大單一園），以及 Tramin 鎮上坡度超過 63%、純南向的 Kastelaz（Gewürztraminer 的聖地）。Gambero Rosso 更封 Elena 為「Gewürztraminer 女王」，是想認識阿爾卑斯山腳白酒精華的必訪名莊。`,
+    signature: [
+      { name: `Gewürztraminer Vigna "Kastelaz" Alto Adige DOC`, note: `鎮莊之寶、義大利 Gewürztraminer 的國際標竿，來自 63% 純南向極陡梯田，荔枝、玫瑰與熱帶香料濃郁卻優雅，被譽為女王級代表作。` },
+      { name: `Beyond the Clouds Alto Adige Bianco DOC`, note: `頂級旗艦白酒，被視為 Alto Adige 第一支白酒「super cuvée」，以 Chardonnay 為主多品種共釀過法國桶，複雜礦感、陳年潛力出色。` },
+      { name: `Lagrein Riserva Vigna "Castel Ringberg"`, note: `代表性紅酒，深石榴紅、酒體飽滿，黑莓、李乾、可可與煙燻加絲滑單寧，是 Lagrein 的高階典範（你收的 Lagrein 即此品種）。` },
+      { name: `Pinot Grigio Vigna "Castel Ringberg"`, note: `義大利首批掛上法定「Vigna」單一園標示的灰皮諾之一，質地飽滿、礦感與深度兼具，顛覆灰皮諾平淡印象。` },
+    ],
+  },
+  {
+    key: 'Donnafugata', name_zh: '多娜佳塔', region_key: 'sicilia',
     founded: '1983', place: 'Marsala, 西西里', type: '家族名莊', tagline: '西西里最具代表性的名莊',
-    story: '多娜佳塔（Donnafugata）由 Giacomo Rallo 與妻子 Gabriella 於 1983 年創立，背後是經營馬沙拉加烈酒已逾 150 年的拉羅（Rallo）家族。酒莊名「Donnafugata（逃亡的女人）」典出蘭佩杜薩的小說《豹》。如今由第二代姊弟 José 與 Antonio Rallo 共同經營，葡萄園遍及西西里多個產區與離島潘泰萊里亞，總面積逾 400 公頃，是西西里最具代表性、最受國際推崇的名莊之一。' },
+    owner: 'Rallo 家族（第五代）', image: 'photo-1690742135975-f04123a1c471',
+    story: `Donnafugata 由 Giacomo Rallo 與妻子 Gabriella 於 1983 年在西西里創立。Rallo 家族並非新手——釀酒根源可追溯到 1851 年在馬沙拉的家族酒廠，至今逾 150 年、傳承五代。當他與被視為「女性葡萄酒先驅」的 Gabriella 另起爐灶時，西西里在國際版圖上幾乎還是一片空白；夫妻倆的夢想，正是釀出能讓世界重新認識西西里的偉大葡萄酒。第一塊葡萄園落在西部 Contessa Entellina 丘陵，是 Donnafugata 故事的起點。
+
+「Donnafugata」這名字本身就是一則傳奇，字面意思是「逃亡的女子」，典出 Tomasi di Lampedusa 的西西里名著《豹》（Il Gattopardo）。這份文學與歷史的浪漫貫穿整個品牌：由 Gabriella 構想、與插畫家 Stefano Vitale 合作的繽紛手繪酒標，一舉揚棄當年制式標籤，以色彩與想像述說西西里風土，成為義大利酒標美學的標誌之一；家族更延伸出「Music & Wine」音樂品酒計畫。永續也是核心——不用除草劑與化肥、自產潔淨能源，是西西里 SOStain 永續基金會的一員。
+
+如今由第五代 José 與 Antonio Rallo 姊弟掌舵，版圖橫跨西西里多個風土：西部核心 Contessa Entellina、火山島 Pantelleria（Zibibbo 老藤）、東南部 Vittoria，以及 2016 年起進駐的埃特納火山北坡，全莊約 380–410 公頃。從西部紅白名釀、火山島的傳奇甜酒，到熔岩坡上的優雅紅白，Donnafugata 已是帶領西西里走向世界的旗艦酒莊，也是「西西里葡萄酒復興」最具代表性的名字。`,
+    signature: [
+      { name: `Ben Ryé Passito di Pantelleria DOC`, note: `100% Zibibbo 風乾甜酒，名字源自阿拉伯語「風之子」，杏桃、糖漬橙皮與蜂蜜的濃郁複雜，是潘泰萊里亞風乾甜酒的標竿、酒莊最傳奇的招牌，必喝。` },
+      { name: `Mille e una Notte`, note: `紅酒旗艦，以 Nero d'Avola 為主混 Petit Verdot 與 Syrah，自 1995 首釀即是西西里紅酒走向世界的象徵，結構磅礡。` },
+      { name: `Tancredi`, note: `1990 年代開創性地把本土 Nero d'Avola 與 Cabernet Sauvignon 結合的經典紅酒，後與 Dolce & Gabbana 聯名酒標，兼具歷史與話題。` },
+      { name: `Sul Vulcano Etna Rosso DOC`, note: `埃特納火山北坡、以 Nerello Mascalese 為主的紅酒，火山風土帶來紅果、薄荷與礦物的優雅細膩。` },
+      { name: `Floramundi Cerasuolo di Vittoria DOCG`, note: `西西里唯一 DOCG，Nero d'Avola＋Frappato 的明亮櫻桃紅、單寧細酸度爽（正是你收的這支）。` },
+    ],
+  },
 ];
 
 export function producerByKey(key) {

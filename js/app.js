@@ -85,7 +85,7 @@ function photoFor(d, w, h) {
 
 // Each photo resolves up from its colour wash — never a pop, never a broken icon.
 function revealImages(scope = document) {
-  $$('.card__img img, .about__img, .band__img, .modal-media img', scope).forEach(img => {
+  $$('.card__img img, .about__img, .band__img, .modal-media img, .modal-banner img', scope).forEach(img => {
     if (img.dataset.bound) return;
     img.dataset.bound = '1';
     const done = () => img.classList.add('is-loaded');
@@ -431,6 +431,7 @@ function openProducerModal(p, { push = true } = {}) {
     p.place   ? { label: '所在地', value: p.place } : null,
     region    ? { label: '產區', value: region.name_zh, sub: region.name_it } : null,
     p.type    ? { label: '類型', value: p.type } : null,
+    p.owner   ? { label: '經營', value: p.owner } : null,
     { label: '我的收藏', value: `${wines.length} 支` },
   ].filter(Boolean);
 
@@ -439,7 +440,19 @@ function openProducerModal(p, { push = true } = {}) {
     return `<button type="button" class="region__chip" data-wine-id="${esc(w.id)}" title="${esc(w.name_en)}">${esc(w.name_en)} <em class="region__chip-tag">${esc(tag)}</em></button>`;
   }).join('');
 
+  const banner = p.image ? `
+    <div class="modal-banner"><img alt="${esc(p.name_zh)} 酒莊風景" decoding="async" loading="eager" src="${IMG_BASE}${p.image}?ixlib=rb-4.0.3&q=78&auto=format&fit=crop&w=1280&h=520" /></div>` : '';
+
+  const signatureSection = (p.signature && p.signature.length) ? `
+    <div class="modal-section">
+      <h3>名酒與必喝 / Signature</h3>
+      <ul class="producer-signature">
+        ${p.signature.map(s => `<li><span class="producer-signature__name" lang="it">${esc(s.name)}</span><span class="producer-signature__note">${esc(s.note)}</span></li>`).join('')}
+      </ul>
+    </div>` : '';
+
   const html = `
+    ${banner}
     <div class="modal-info modal-info--solo">
       <div class="modal-info__head">
         <div class="modal-info__eyebrow">WINERY · 酒莊</div>
@@ -460,6 +473,7 @@ function openProducerModal(p, { push = true } = {}) {
       </div>
 
       <div class="modal-section"><h3>酒莊故事 / The Producer</h3>${proseBlocks(p.story)}</div>
+      ${signatureSection}
       <div class="modal-section">
         <h3>我收的這幾支 / From This Producer</h3>
         <div class="region__wines region__wines--modal">${wineChips}</div>
