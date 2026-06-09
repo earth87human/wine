@@ -2,17 +2,15 @@
    Charts — pure SVG, animated on intersection
    ============================================================ */
 
-import { styleAxisTier, STYLE_AXIS_ENDS } from './data.js';
+import { ITALY_REGIONS } from './data.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 export function renderCharts(drinks, typeMeta) {
   renderTypeChart(drinks, typeMeta);
-  renderCountryChart(drinks);
-  renderRatingChart(drinks);
+  renderRegionChart(drinks);
   renderVarietalChart(drinks);
-  renderStyleChart(drinks);
   addChartCaptions(drinks);
   observeChartsForAnimation();
 }
@@ -21,10 +19,8 @@ export function renderCharts(drinks, typeMeta) {
 function addChartCaptions(drinks) {
   const caps = {
     'chart-type':     'i · 依酒型 by type',
-    'chart-country':  'ii · 依產地 by origin',
-    'chart-rating':   'iii · 依評分 by rating',
-    'chart-varietal': 'iv · 依品種 by varietal',
-    'chart-style':    'v · 風格光譜 terroir ⇄ intl',
+    'chart-region':   'ii · 依產區 by region',
+    'chart-varietal': 'iii · 依品種 by varietal',
   };
   Object.entries(caps).forEach(([id, label]) => {
     const el = document.getElementById(id);
@@ -106,75 +102,34 @@ function renderTypeChart(drinks, typeMeta) {
   `;
 }
 
-/* ---- Country bars ---- */
-function renderCountryChart(drinks) {
+/* ---- Region bars (義大利產區，原文 + 國旗) ---- */
+function renderRegionChart(drinks) {
   const counts = {};
   drinks.forEach(d => {
-    const key = d.country_zh || d.country;
-    counts[key] = (counts[key] || 0) + 1;
+    if (d.region_key) counts[d.region_key] = (counts[d.region_key] || 0) + 1;
   });
-  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  const max = Math.max(...sorted.map(([, c]) => c), 1);
 
-  const rows = sorted.map(([name, count], i) => `
+  const rows = Object.entries(counts)
+    .map(([key, count]) => {
+      const r = ITALY_REGIONS.find(x => x.key === key);
+      return { name: r ? r.name_it : key, count };
+    })
+    .sort((a, b) => b.count - a.count);
+  const max = Math.max(...rows.map(r => r.count), 1);
+
+  const html = rows.map((r, i) => `
     <div class="row">
-      <span class="label">${esc(name)}</span>
+      <span class="label"><span class="flag" aria-hidden="true">🇮🇹</span>${esc(r.name)}</span>
       <div class="track">
-        <div class="fill" data-w="${(count / max * 100).toFixed(1)}%"
+        <div class="fill" data-w="${(r.count / max * 100).toFixed(1)}%"
              style="transition-delay: ${i * 70}ms;"></div>
       </div>
-      <span class="num">${count}</span>
+      <span class="num">${r.count}</span>
     </div>
   `).join('');
 
-  $('#chart-country-body').innerHTML = `
-    <div class="chart__bar">${rows}</div>
-  `;
-}
-
-/* ---- Rating distribution ---- */
-function renderRatingChart(drinks) {
-  const counts = [0, 0, 0, 0, 0]; // index 0 = 1 star ... index 4 = 5 stars
-  let unrated = 0;
-  drinks.forEach(d => {
-    // round to the nearest whole star so fractional ratings (e.g. 3.8) bucket cleanly
-    if (d.rating >= 1 && d.rating <= 5) counts[Math.round(d.rating) - 1]++;
-    else if (d.rating == null) unrated++;
-  });
-  const max = Math.max(...counts, unrated, 1);
-
-  let rows = counts.map((count, i) => {
-    const star = i + 1;
-    const stars = Array.from({ length: star }, () => `<i></i>`).join('');
-    return `
-      <div class="row">
-        <span class="stars">${stars}</span>
-        <div class="track">
-          <div class="fill" data-w="${(count / max * 100).toFixed(1)}%"
-               style="transition-delay: ${i * 80}ms;"></div>
-        </div>
-        <span class="num">${count}</span>
-      </div>
-    `;
-  }).reverse().join('');
-
-  // "待品飲": bought-but-not-yet-rated bottles, shown as a dashed ghost bar so the
-  // chart honestly sums to every bottle (matching the donut) without faking a low score.
-  if (unrated > 0) {
-    rows += `
-      <div class="row row--unrated">
-        <span class="totry-label">待品飲</span>
-        <div class="track">
-          <div class="fill fill--ghost" data-w="${(unrated / max * 100).toFixed(1)}%"
-               style="transition-delay: 480ms;"></div>
-        </div>
-        <span class="num">${unrated}</span>
-      </div>
-    `;
-  }
-
-  $('#chart-rating-body').innerHTML = `
-    <div class="chart__rating">${rows}</div>
+  $('#chart-region-body').innerHTML = `
+    <div class="chart__bar chart__bar--region">${html}</div>
   `;
 }
 
@@ -206,43 +161,6 @@ function renderVarietalChart(drinks) {
 
   $('#chart-varietal-body').innerHTML = `
     <div class="chart__cloud">${items}</div>${note}
-  `;
-}
-
-/* ---- Style axis (terroir ⇄ international) ---- */
-function renderStyleChart(drinks) {
-  const items = drinks
-    .filter(d => d.style_axis != null)
-    .sort((a, b) => b.style_axis - a.style_axis);
-
-  const ends = `
-    <div class="chart__axis-ends">
-      <span>${esc(STYLE_AXIS_ENDS.left.zh)}<i>${esc(STYLE_AXIS_ENDS.left.en)}</i></span>
-      <span>${esc(STYLE_AXIS_ENDS.right.zh)}<i>${esc(STYLE_AXIS_ENDS.right.en)}</i></span>
-    </div>
-  `;
-
-  const rows = items.map((d, i) => {
-    const v = d.style_axis;
-    const tier = styleAxisTier(v);
-    const short = d.name_en || d.name_zh || '';  // 內容用義大利文酒名（非中文）
-    return `
-      <div class="row" title="${esc(d.name_en)} · ${esc(tier.zh)}（${v}/100）">
-        <span class="label">${esc(short)}</span>
-        <div class="track">
-          <div class="fill" data-w="${v}%" style="transition-delay:${i * 70}ms;"></div>
-          <i class="dot" style="left:${v}%; background:${esc(d.color_hex || '#5C1A1B')};"></i>
-        </div>
-        <span class="axis-tier">${esc(tier.zh)}</span>
-      </div>
-    `;
-  }).join('');
-
-  $('#chart-style-body').innerHTML = `
-    <div class="chart__axis">
-      ${ends}
-      <div class="chart__axis-rows">${rows}</div>
-    </div>
   `;
 }
 

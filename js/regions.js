@@ -66,7 +66,7 @@ export function renderRegions(drinks) {
         const detail = st === 'unexplored'
           ? `<span class="region__hint">${(r.wines || []).slice(0, 3).map(esc).join(' · ')}</span>`
           : `<span class="region__wines">${wines.map(w =>
-              `<button type="button" class="region__chip" data-wine-id="${esc(w.id)}" title="${esc(w.name_zh)}">${esc(w.name_zh)}</button>`
+              `<button type="button" class="region__chip" data-wine-id="${esc(w.id)}" title="${esc(w.name_en)}">${esc(w.name_en)}</button>`
             ).join('')}</span>`;
         return `
           <li class="region region--${st}" title="${esc(r.note)}">

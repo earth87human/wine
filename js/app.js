@@ -461,9 +461,9 @@ function setupModal() {
 function setupFigures() {
   const band = $('#hero-stats');
   if (!band) return;
-  const countries = new Set(drinks.map(d => d.country_zh || d.country)).size;
+  const regions = new Set(drinks.map(d => d.region_key).filter(Boolean)).size;
   const varietals = new Set(drinks.map(d => d.varietal)).size;
-  const targets = [drinks.length, countries, varietals];
+  const targets = [drinks.length, regions, varietals];
   const els = $$('.stat__num', band);
   els.forEach((el, i) => el.dataset.target = String(targets[i]));
 

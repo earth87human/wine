@@ -292,8 +292,9 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 .chart__donut-legend li span { flex: 1; }
 
 .chart__bar { display: flex; flex-direction: column; gap: 1rem; }
-.chart__bar .row { display: grid; grid-template-columns: 90px 1fr 32px; align-items: center; gap: 0.9rem; font-family: var(--f-ui); font-size: 0.82rem; }
-.chart__bar .row .label { color: var(--ink-soft); }
+.chart__bar .row { display: grid; grid-template-columns: 150px 1fr 28px; align-items: center; gap: 0.9rem; font-family: var(--f-ui); font-size: 0.82rem; }
+.chart__bar .row .label { color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chart__bar .row .label .flag { margin-right: 0.4rem; }
 .chart__bar .row .track { position: relative; height: 1px; background: var(--line); }
 .chart__bar .row .fill { position: absolute; left: 0; top: 50%; transform: translateY(-50%); height: 2px; width: 0; background: var(--wine); transition: width 1.2s var(--e-cine); }
 .chart__bar .row .num { text-align: right; font-family: var(--f-display); font-style: italic; color: var(--ink); }
@@ -362,7 +363,7 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 .region__wines { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.45rem; }
 .region__chip { font-family: var(--f-serif-tc); font-size: 0.82rem; line-height: 1; color: var(--ink-soft);
   background: transparent; border: 1px solid var(--line-2); border-radius: 999px; padding: 0.34rem 0.72rem; cursor: pointer;
-  max-width: 18ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   transition: border-color var(--t-quick) var(--e-soft), color var(--t-quick) var(--e-soft); }
 .region__chip:hover, .region__chip:focus-visible { border-color: var(--wine); color: var(--wine); outline: none; }
 .region--tasted .region__chip { border-color: rgba(110,26,31,0.32); }
