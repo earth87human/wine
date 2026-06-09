@@ -330,12 +330,53 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 /* ============================================================
    REGIONS — Italy exploration ledger（分區清單）
    ============================================================ */
-.regions__summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 1rem 2rem; margin-top: 1.8rem; }
+.regions__summary { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1.4rem; margin-top: 1.8rem; }
+.regions__stats { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.9rem 1.5rem; }
 .regions__stat { font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
 .regions__stat b { font-family: var(--f-display); font-style: italic; font-size: 1.5rem; letter-spacing: 0; color: var(--wine); margin-right: 0.4rem; }
 .regions__stat--mute b { color: var(--ink-soft); }
-.regions__legend { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--f-ui); font-size: 10.5px; letter-spacing: 0.08em; color: var(--mute); margin-left: auto; }
+.regions__legend { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--f-ui); font-size: 10.5px; letter-spacing: 0.08em; color: var(--mute); }
 .regions__legend .region__mark { margin: 0 0.2rem 0 0.8rem; }
+
+/* 檢視切換：酒款 ⇄ 酒莊 */
+.seg { display: inline-flex; gap: 2px; margin-left: auto; border: 1px solid var(--line-2); border-radius: 999px; padding: 2px; }
+.seg button { font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.1em; color: var(--mute); background: transparent; border: 0; border-radius: 999px; padding: 0.35rem 1rem; cursor: pointer; transition: color var(--t-quick) var(--e-soft), background var(--t-quick) var(--e-soft); }
+.seg button.is-active { color: var(--paper); background: var(--wine); }
+.seg button:not(.is-active):hover { color: var(--ink); }
+
+/* 一句話產區導讀（露出，原本藏在 hover title） */
+.region__note { flex-basis: 100%; padding-left: 1.55rem; margin-top: 0.35rem; font-family: var(--f-serif-tc); font-weight: 300; font-size: 0.82rem; line-height: 1.55; color: var(--mute); }
+
+/* 未探索區：摺疊段 */
+.regions__more { margin-top: 0.4rem; }
+.regions__more > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 0.55rem; padding: 0.75rem 0; border-top: 1px solid var(--line); font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.1em; color: var(--mute); transition: color var(--t-quick) var(--e-soft); }
+.regions__more > summary::-webkit-details-marker { display: none; }
+.regions__more > summary::after { content: '▸'; margin-left: auto; transition: transform var(--t-quick) var(--e-soft); }
+.regions__more[open] > summary::after { transform: rotate(90deg); }
+.regions__more > summary:hover { color: var(--ink); }
+.regions__list--more { margin-top: 0.1rem; }
+
+/* 酒莊檢視：整列可點 → 酒莊 modal */
+.regions__list--producers .producer { border-bottom: 1px solid var(--line); }
+.regions__list--producers .producer:last-child { border-bottom: 0; }
+.producer__row { display: flex; align-items: baseline; gap: 0.55rem; width: 100%; padding: 0.85rem 0.2rem 0.85rem 0; text-align: left; background: transparent; border: 0; cursor: pointer; color: inherit; font: inherit; transition: background var(--t-quick) var(--e-soft); }
+.producer__row:hover { background: rgba(110,26,31,0.035); }
+.producer__row:focus-visible { outline: 2px solid var(--wine); outline-offset: -2px; }
+.producer__main { flex: 1; min-width: 0; }
+.producer__name { font-family: var(--f-display); font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.01em; }
+.producer__name em { font-family: var(--f-sans-tc); font-style: normal; font-weight: 300; font-size: 0.74rem; color: var(--mute); margin-left: 0.5rem; }
+.producer__meta { display: block; margin-top: 0.25rem; font-family: var(--f-serif-tc); font-weight: 300; font-size: 0.82rem; line-height: 1.5; color: var(--mute); }
+.producer__aside { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 0.15rem; }
+.producer__region { font-family: var(--f-display); font-style: italic; font-size: 0.82rem; color: var(--bronze-text); }
+.producer__count { font-family: var(--f-ui); font-size: 10px; letter-spacing: 0.1em; color: var(--mute); white-space: nowrap; }
+
+/* 酒莊 modal：無圖、單欄滿版置中；酒款 chip 帶評分小標 */
+.modal-info--solo { grid-column: 1 / -1; max-width: 820px; margin-inline: auto; }
+.modal-info__producer--link { background: transparent; border: 0; padding: 0; cursor: pointer; color: var(--bronze-text); transition: color var(--t-quick) var(--e-soft); }
+.modal-info__producer--link:hover, .modal-info__producer--link:focus-visible { color: var(--wine); outline: none; }
+.region__wines--modal { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.region__chip-tag { font-family: var(--f-ui); font-style: normal; font-size: 9.5px; letter-spacing: 0.06em; color: var(--mute); margin-left: 0.35rem; }
+.region--tasted .region__chip-tag, .region__wines--modal .region__chip-tag { color: var(--bronze-text); }
 
 .regions__zones { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem);
   max-width: var(--max-w); margin: 0 auto; padding: clamp(1rem, 2vw, 2rem) var(--gut-x) var(--pad-y); }
@@ -361,9 +402,9 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
 .region__hint, .region__wines { flex-basis: 100%; padding-left: 1.55rem; }
 .region__hint { font-family: var(--f-serif-tc); font-weight: 300; font-size: 0.85rem; color: var(--mute); }
 .region__wines { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.45rem; }
-.region__chip { font-family: var(--f-serif-tc); font-size: 0.82rem; line-height: 1; color: var(--ink-soft);
+.region__chip { font-family: var(--f-serif-tc); font-size: 0.82rem; line-height: 1.3; color: var(--ink-soft);
   background: transparent; border: 1px solid var(--line-2); border-radius: 999px; padding: 0.34rem 0.72rem; cursor: pointer;
-  max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  white-space: normal; text-align: left;
   transition: border-color var(--t-quick) var(--e-soft), color var(--t-quick) var(--e-soft); }
 .region__chip:hover, .region__chip:focus-visible { border-color: var(--wine); color: var(--wine); outline: none; }
 .region--tasted .region__chip { border-color: rgba(110,26,31,0.32); }

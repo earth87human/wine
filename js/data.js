@@ -583,7 +583,7 @@ export const ITALY_REGIONS = [
   { key: 'piemonte', name_en: 'Piedmont', name_it: 'Piemonte', name_zh: '皮埃蒙特', zone: 'North',
     grapes: ['Nebbiolo', 'Barbera', 'Moscato'], wines: ['Barolo', 'Barbaresco', 'Barbera d\'Alba'],
     note: '義大利紅酒王國，Barolo 被稱「酒中之王」；新手可先試單寧較柔、果香飽滿的 Barbera。' },
-  { key: 'valle-aosta', name_en: 'Valle d\'Aosta', name_it: 'Valle d\'Aosta', name_zh: '瓦萊達奧斯塔', zone: 'North',
+  { key: 'valle-aosta', name_en: 'Valle d\'Aosta', name_it: 'Valle d\'Aosta', name_zh: '奧斯塔谷', zone: 'North',
     grapes: ['Prié Blanc', 'Petit Rouge', 'Fumin'], wines: ['Blanc de Morgex', 'Torrette'],
     note: '義大利最小、最高海拔的阿爾卑斯山產區；高山清爽白酒與柔順紅酒為主。' },
   { key: 'trentino-alto-adige', name_en: 'Trentino-Alto Adige', name_it: 'Trentino-Alto Adige', name_zh: '上阿迪杰', zone: 'North',
@@ -651,3 +651,41 @@ export const ITALY_ZONE_GROUPS = [
   { key: 'central', it: 'Centro',      zh: '中部',      en: 'Central',          zones: ['Central'] },
   { key: 'south',   it: 'Sud · Isole', zh: '南部 · 離島', en: 'South & Islands', zones: ['South', 'Islands'] },
 ];
+
+// ============================================================
+// 酒莊（producer）參考表 — 給「產區地圖」的酒莊檢視與酒莊 modal 用。
+// key = wine.producer 字串（直接 join）；story 是把同莊各酒的 producer_note
+//   合併去重後的「莊級」簡介（事實敘述、不含個人評分）。
+// founded / place / tagline 皆可選，缺了就不顯示。
+// 新增義大利酒時：給酒一個 producer 字串對到這裡的 key 即可自動上莊。
+// ============================================================
+export const PRODUCERS = [
+  { key: 'St. Michael-Eppan', name_zh: '聖米歇爾-艾本', region_key: 'trentino-alto-adige',
+    founded: '1907', place: 'Eppan, 上阿迪杰', type: '合作社', tagline: '上阿迪杰黑皮諾名家',
+    story: '聖米歇爾-艾本是上阿迪杰最受敬重的合作社酒莊之一，1907 年創立，由三百多位酒農、近 385 公頃葡萄園組成。曾被 Gambero Rosso／Slow Food《義大利葡萄酒指南》選為「2000 年度最佳義大利酒莊」，以細膩優雅著稱，是公認義大利最會做黑皮諾的產區裡的代表性名莊。' },
+  { key: 'Tenuta Carretta', name_zh: '卡蕾塔', region_key: 'piemonte',
+    founded: '1467', place: 'Piobesi d\'Alba, Roero', type: '家族莊', tagline: '皮埃蒙特最古老酒莊之一',
+    story: '卡蕾塔酒莊的歷史可追溯到 1467 年一份提及「cassina Careta」的契約，是皮埃蒙特、乃至義大利歷史最悠久的酒莊之一，莊園位於阿爾巴近郊羅埃羅產區的 Piobesi d\'Alba。1985 年起由阿爾巴的 Miroglio 家族接手經營至今，強調風土表現；在白酒（阿內斯）與紅酒（巴貝拉）都有代表作。' },
+  { key: 'Tenuta Pederzana', name_zh: '佩德札納', region_key: 'emilia-romagna',
+    founded: '', place: 'Castelvetro, Modena', type: '家族小農', tagline: '葛拉斯帕羅薩老品系小農',
+    story: '佩德札納是摩典納卡斯特爾韋特羅一帶的家族小農酒莊，園區位於 Solignano Vecchio 丘陵、規模約十幾公頃，幾乎只種蘭布魯斯科家族裡最深色厚實的葛拉斯帕羅薩，走手工採收、忠於風土的路線。他們甚至保留了一支自家篩選、曾與波隆那大學合作研究的獨特老品系（clone，即從同一株母藤複製出的品系），產量不大。' },
+  { key: 'Fratelli Cella', name_zh: '雀拉', region_key: 'emilia-romagna',
+    founded: '1960', place: 'Campegine, Emilia', type: '量產品牌', tagline: '行銷四十多國的商業蘭布魯斯科',
+    story: 'Fratelli Cella（雀拉）創立於 1960 年，總部在艾米利亞-羅馬涅的 Campegine，是義大利最知名的商業蘭布魯斯科品牌之一，行銷全球四十多國，隸屬大型釀酒合作社聯盟 Cantine Riunite & CIV，走規模化、標準化的量產路線——和同產區的佩德札納小農剛好是兩個極端。' },
+  { key: 'Cave Mont Blanc', name_zh: '白朗峰', region_key: 'valle-aosta',
+    founded: '1983', place: 'Morgex, 奧斯塔谷', type: '合作社', tagline: '歐洲最高酒廠（2,173m）',
+    story: 'Cave Mont Blanc 是 1983 年成立的釀酒合作社，位在白朗峰腳下，把約 70 戶高山葡農、合計約 18 公頃葡萄園集結起來，共同守護這片風土。氣泡酒 1986 年首釀只做了約 1,000 瓶，如今年產約 10 萬瓶。最傳奇的是它在海拔 2,173 公尺的纜車站（Pavillon du Mont Fréty）設了酒窖——號稱全歐洲最高的酒廠。' },
+  { key: 'Grosjean', name_zh: '葛羅讓', region_key: 'valle-aosta',
+    founded: '1968', place: 'Quart, 奧斯塔谷', type: '家族莊', tagline: '奧斯塔谷第一家有機認證酒莊',
+    story: '葛羅讓兄弟酒莊（Maison Vigneronne Frères Grosjean）位在奧斯塔谷 Quart 鎮的 Ollignan 小村，是典型的「英雄式高山葡萄種植」（陡坡、人工）。由祖父 Dauphin Grosjean 約 1968 年正式創立，現已傳到第三代。環保走得很早——1975 年起就不噴殺蟲劑，並於 2011 年成為奧斯塔谷第一家通過有機認證的酒莊。' },
+  { key: 'Elena Walch', name_zh: '伊蓮娜·瓦爾希', region_key: 'trentino-alto-adige',
+    founded: '1869', place: 'Tramin, 上阿迪杰', type: '家族莊', tagline: '南提洛首位女釀酒師的指標名莊',
+    story: '伊蓮娜·瓦爾希（Elena Walch）是上阿迪杰公認的指標酒莊之一，位在 Tramin 小鎮，家族釀酒史溯至 1869 年。靈魂人物 Elena Walch 建築師出身，1985 年成為南提洛第一位女釀酒師，1988 年創立自有品牌，把「風土＋單一園」的現代觀念帶進產區；現由女兒 Julia 與 Karoline 接手（第五代）。旗下有 Castel Ringberg 與 Kastelaz 兩座名園，近年轉型有機、2024 年取得 VIVA 永續認證。' },
+  { key: 'Donnafugata', name_zh: '多娜佳塔', region_key: 'sicilia',
+    founded: '1983', place: 'Marsala, 西西里', type: '家族名莊', tagline: '西西里最具代表性的名莊',
+    story: '多娜佳塔（Donnafugata）由 Giacomo Rallo 與妻子 Gabriella 於 1983 年創立，背後是經營馬沙拉加烈酒已逾 150 年的拉羅（Rallo）家族。酒莊名「Donnafugata（逃亡的女人）」典出蘭佩杜薩的小說《豹》。如今由第二代姊弟 José 與 Antonio Rallo 共同經營，葡萄園遍及西西里多個產區與離島潘泰萊里亞，總面積逾 400 公頃，是西西里最具代表性、最受國際推崇的名莊之一。' },
+];
+
+export function producerByKey(key) {
+  return PRODUCERS.find(p => p.key === key) || null;
+}

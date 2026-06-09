@@ -1,4 +1,4 @@
-import { drinks, typeMeta, styleAxisTier, STYLE_AXIS_ENDS } from './data.js';
+import { drinks, typeMeta, styleAxisTier, STYLE_AXIS_ENDS, ITALY_REGIONS, producerByKey } from './data.js';
 import { setupReveal, setupNav, animateCounter, hideLoader, setupCinema } from './animations.js';
 import { renderCharts } from './charts.js';
 import { renderRegions } from './regions.js';
@@ -10,6 +10,34 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({
 }[m]));
 
 let lastFocused = null;
+
+// 長文以空行（\n\n）分段 → 多個 <p>
+const proseBlocks = txt => txt
+  ? String(txt).split(/\n{2,}/).map(p => p.trim()).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('')
+  : '';
+
+// 開啟 modal 抽屜 — 酒款 / 酒莊共用同一個容器與生命週期
+function openSheet(html, { hash, push = true } = {}) {
+  const modal = $('#modal');
+  const inner = $('#modal-inner');
+  inner.innerHTML = html;
+  const sheet = $('.modal__sheet');
+  sheet.scrollTop = 0;
+  sheet.setAttribute('aria-labelledby', 'modal-title');
+  lastFocused = document.activeElement;
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  if (push && hash && location.hash !== hash) {
+    history.pushState({ sheet: hash }, '', hash);
+  }
+  // while the guest is in the room, the rest of the property recedes
+  [...document.body.children].forEach(el => {
+    if (el !== modal && el.id !== 'loader' && !el.classList.contains('skip-link')) el.setAttribute('inert', '');
+  });
+  revealImages(inner);
+  requestAnimationFrame(() => sheet.focus({ preventScroll: true }));
+}
 
 // 國家 → 國旗 emoji（card 上標示產國，讓人一眼知道哪國）
 const FLAG = {
@@ -224,8 +252,6 @@ function renderGrid() {
    Modal (detail)
    ============================================================ */
 function openModal(d, { push = true } = {}) {
-  const modal = $('#modal');
-  const inner = $('#modal-inner');
   const meta = typeMeta[d.type] || {};
   const isRated = d.rating != null;
 
@@ -298,11 +324,6 @@ function openModal(d, { push = true } = {}) {
         </dl>
       </div>` : '';
 
-  // 長文以空行（\n\n）分段 → 多個 <p>，避免知識區塊變成一大坨
-  const proseBlocks = txt => txt
-    ? String(txt).split(/\n{2,}/).map(p => p.trim()).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('')
-    : '';
-
   // 知識區塊：品種／產區／釀法／分級／酒莊／入門／背景／品飲練習（皆為事實、非個人評價）
   const knowSection = [
     ['品種小知識', 'About the Grape', d.varietal_note],
@@ -351,7 +372,12 @@ function openModal(d, { push = true } = {}) {
     ? `<div class="modal-section"><h3>外觀 / Appearance</h3><p>${esc(d.appearance)}</p></div>`
     : '';
 
-  inner.innerHTML = `
+  // 酒莊名：若是已建檔酒莊，做成可點連結 → 酒莊 modal
+  const producerTag = producerByKey(d.producer)
+    ? `<button type="button" class="modal-info__producer modal-info__producer--link" data-producer-key="${esc(d.producer)}">${esc(d.producer)} →</button>`
+    : `<span class="modal-info__producer">${esc(d.producer)}</span>`;
+
+  const html = `
     <div class="modal-media"><img alt="${esc(d.name_zh)} 的酒杯" decoding="async" width="1100" height="1400" src="${photoFor(d, 1100, 1400)}" /></div>
     <div class="modal-info">
       <div class="modal-info__head">
@@ -359,7 +385,7 @@ function openModal(d, { push = true } = {}) {
         <p class="modal-info__name-zh">${esc(d.name_zh)}</p>
         <h2 class="modal-info__name" id="modal-title" lang="en">${nameHTML}</h2>
         <div class="modal-info__meta">
-          <span class="modal-info__producer">${esc(d.producer)}</span>
+          ${producerTag}
           <span class="modal-info__logged">${isRated ? '品飲 · Tasted' : '記下 · Noted'} ${esc(fmtDate(d.tasting_date))}</span>
         </div>
       </div>
@@ -389,23 +415,58 @@ function openModal(d, { push = true } = {}) {
       <div class="modal-section"><h3>場景 / Context</h3><p>${esc(fmtDate(d.tasting_date))} · ${esc(d.occasion)}</p></div>
     </div>`;
 
-  const sheet = $('.modal__sheet');
-  sheet.scrollTop = 0;
-  sheet.setAttribute('aria-labelledby', 'modal-title');
-  lastFocused = document.activeElement;
-  modal.classList.add('is-open');
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  openSheet(html, { hash: '#w-' + d.id, push });
+}
 
-  if (push && location.hash !== '#w-' + d.id) {
-    history.pushState({ wine: d.id }, '', '#w-' + d.id);
-  }
-  // while the guest is in the room, the rest of the property recedes
-  [...document.body.children].forEach(el => {
-    if (el !== modal && el.id !== 'loader' && !el.classList.contains('skip-link')) el.setAttribute('inert', '');
-  });
-  revealImages(inner);
-  requestAnimationFrame(() => sheet.focus({ preventScroll: true }));
+/* ============================================================
+   Producer (winery) modal — reuses the same sheet
+   ============================================================ */
+function openProducerModal(p, { push = true } = {}) {
+  const region = ITALY_REGIONS.find(r => r.key === p.region_key);
+  const wines = drinks.filter(d => d.producer === p.key)
+    .sort((a, b) => (a.rating == null) - (b.rating == null));
+
+  const facts = [
+    p.founded ? { label: '建莊', value: p.founded } : null,
+    p.place   ? { label: '所在地', value: p.place } : null,
+    region    ? { label: '產區', value: region.name_zh, sub: region.name_it } : null,
+    p.type    ? { label: '類型', value: p.type } : null,
+    { label: '我的收藏', value: `${wines.length} 支` },
+  ].filter(Boolean);
+
+  const wineChips = wines.map(w => {
+    const tag = w.rating != null ? `${w.rating}★` : '待品飲';
+    return `<button type="button" class="region__chip" data-wine-id="${esc(w.id)}" title="${esc(w.name_en)}">${esc(w.name_en)} <em class="region__chip-tag">${esc(tag)}</em></button>`;
+  }).join('');
+
+  const html = `
+    <div class="modal-info modal-info--solo">
+      <div class="modal-info__head">
+        <div class="modal-info__eyebrow">WINERY · 酒莊</div>
+        <p class="modal-info__name-zh">${esc(p.name_zh)}</p>
+        <h2 class="modal-info__name" id="modal-title" lang="it">${esc(p.key)}</h2>
+        <div class="modal-info__meta">
+          ${region ? `<span class="modal-info__producer">${esc(region.name_it)} · ${esc(region.name_zh)}</span>` : ''}
+          ${p.type ? `<span class="modal-info__logged">${esc(p.type)}</span>` : ''}
+        </div>
+      </div>
+
+      <div class="modal-facts">
+        ${facts.map(f => `
+          <div class="modal-fact">
+            <div class="modal-fact__label">${esc(f.label)}</div>
+            <div class="modal-fact__value">${esc(f.value)}${f.sub ? `<em>${esc(f.sub)}</em>` : ''}</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="modal-section"><h3>酒莊故事 / The Producer</h3>${proseBlocks(p.story)}</div>
+      <div class="modal-section">
+        <h3>我收的這幾支 / From This Producer</h3>
+        <div class="region__wines region__wines--modal">${wineChips}</div>
+      </div>
+    </div>`;
+
+  openSheet(html, { hash: '#p-' + encodeURIComponent(p.key), push });
 }
 
 function closeModalUI() {
@@ -422,10 +483,12 @@ function closeModalUI() {
 }
 
 function closeModal() {
-  if (history.state && history.state.wine) {
+  if (history.state && history.state.sheet) {
     history.back();
   } else {
-    if (location.hash.startsWith('#w-')) history.replaceState(null, '', location.pathname + location.search);
+    if (location.hash.startsWith('#w-') || location.hash.startsWith('#p-')) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
     closeModalUI();
   }
 }
@@ -433,6 +496,14 @@ function closeModal() {
 function setupModal() {
   const modal = $('#modal');
   modal.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
+
+  // modal 內的 chip：酒款 → 酒款 modal、酒莊 → 酒莊 modal（可在 modal 之間互跳）
+  $('#modal-inner')?.addEventListener('click', e => {
+    const wineEl = e.target.closest('[data-wine-id]');
+    if (wineEl) { const d = drinks.find(x => x.id === wineEl.dataset.wineId); if (d) openModal(d); return; }
+    const prodEl = e.target.closest('[data-producer-key]');
+    if (prodEl) { const p = producerByKey(prodEl.dataset.producerKey); if (p) openProducerModal(p); }
+  });
   document.addEventListener('keydown', e => {
     if (!modal.classList.contains('is-open')) return;
     if (e.key === 'Escape') { closeModal(); return; }
@@ -446,10 +517,13 @@ function setupModal() {
     }
   });
   window.addEventListener('popstate', () => {
-    const id = location.hash.startsWith('#w-') ? location.hash.slice(3) : null;
-    if (id) {
-      const d = drinks.find(x => x.id === id);
+    const h = location.hash;
+    if (h.startsWith('#w-')) {
+      const d = drinks.find(x => x.id === h.slice(3));
       if (d) { openModal(d, { push: false }); return; }
+    } else if (h.startsWith('#p-')) {
+      const p = producerByKey(decodeURIComponent(h.slice(3)));
+      if (p) { openProducerModal(p, { push: false }); return; }
     }
     if (modal.classList.contains('is-open')) closeModalUI();
   });
@@ -499,12 +573,12 @@ function init() {
   renderRegions(drinks);
   revealImages();
 
-  // 產區地圖：點產區裡的酒款 chip → 開該支酒的 modal（沿用現有 modal）
+  // 產區地圖：酒款 chip → 酒款 modal；酒莊列 → 酒莊 modal（沿用同一個 modal 容器）
   $('#regions-zones')?.addEventListener('click', e => {
-    const chip = e.target.closest('[data-wine-id]');
-    if (!chip) return;
-    const d = drinks.find(x => x.id === chip.dataset.wineId);
-    if (d) openModal(d);
+    const wineEl = e.target.closest('[data-wine-id]');
+    if (wineEl) { const d = drinks.find(x => x.id === wineEl.dataset.wineId); if (d) openModal(d); return; }
+    const prodEl = e.target.closest('[data-producer-key]');
+    if (prodEl) { const p = producerByKey(prodEl.dataset.producerKey); if (p) openProducerModal(p); }
   });
 
   $('#grid-empty')?.addEventListener('click', e => {
@@ -532,6 +606,9 @@ function init() {
   if (location.hash.startsWith('#w-')) {
     const d = drinks.find(x => x.id === location.hash.slice(3));
     if (d) openModal(d, { push: false });
+  } else if (location.hash.startsWith('#p-')) {
+    const p = producerByKey(decodeURIComponent(location.hash.slice(3)));
+    if (p) openProducerModal(p, { push: false });
   }
 
   // Loader fades once the hero image is in (or on a safety timeout)
