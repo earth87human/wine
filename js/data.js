@@ -1170,6 +1170,62 @@ export const drinks = [
     style_note: '維門提諾在薩丁尼亞風土下的鹹礦與香草個性鮮明、偏風土；但它也是地中海廣布的品種、釀法走乾淨保鮮路線，因此偏風土但不極端。',
     image: null,
   },
+  {
+    id: 'making-waves-sauvignon-blanc',
+    region_key: 'marlborough',
+    category: 'wine',
+    type: 'white',
+    type_zh: '白酒',
+    name_en: 'Making Waves Sauvignon Blanc',
+    name_zh: '海波浪 白蘇維濃',
+    producer: 'Making Waves',
+    varietal: 'Sauvignon Blanc',
+    varietal_zh: '白蘇維濃',
+    region: 'Marlborough',
+    region_zh: '馬爾堡',
+    country: 'New Zealand',
+    country_zh: '紐西蘭',
+    year: 2024,
+    abv: 13,
+    sweetness: '乾型',
+    classification: 'Marlborough（紐西蘭地區級 GI）',
+    price: 499,
+    bottles: 1,
+    price_tier: '$',
+    market_price_twd: '全聯特價 NT$499（平日約 NT$500–600，推估）',
+    rating: null,
+    tasting_date: null,
+    occasion: '全聯購入 · 老婆愛喝（我嫌聞起來的草味）',
+    highlights: [
+      '收藏裡第一支白蘇維濃 + 第一支紐西蘭／新世界酒',
+      'Marlborough（馬爾堡）——白蘇維濃的世界級故鄉',
+      '熱帶水果派（芭樂、百香果），青草味比典型款收斂',
+      '老婆的菜：那股「聞起來的草味」正是站主的鼻子地雷',
+    ],
+    appearance: '明亮的淺禾稈黃、清澈。',
+    aroma: ['芭樂', '百香果', '黃檸檬', '哈密瓜', '青草／蘆筍（較收斂）'],
+    palate: ['乾爽', '中等酸度', '果味直接', '輕盈水感'],
+    finish: '中等長度的尾韻，帶柑橘與一點礦物，清爽俐落。',
+    pairing: ['煎魚', '海鮮', '生蠔', '烏魚子', '檸檬塔', '奶油乳酪蛋糕'],
+    pairing_note: '高酸＋清爽果香很會「洗」油膩、替海鮮提鮮，是萬用的海鮮餐前白；冰得越透越好喝。',
+    varietal_note: '白蘇維濃（Sauvignon Blanc）是世界級的芳香白葡萄，以「香氣奔放」著稱：典型風味是百香果、葡萄柚、青檸，以及標誌性的「青草／青椒／蘆筍」般的綠色草本氣息（來自一種叫甲氧基吡嗪的成分）。紐西蘭馬爾堡是它最出名的產區，把這股「熱帶果＋鮮綠草本」做到極致鮮明。這支屬熱帶水果路線、青草味相對收斂，但「草本香氣」仍是品種無法抹去的指紋——也正是這股「鼻子聞到的草味」，是站主的味覺地雷（入口的味道其實可以接受）。',
+    region_note: '馬爾堡（Marlborough）位於紐西蘭南島北端的懷魯河谷（Wairau Valley），是全世界最具代表性的白蘇維濃產區。極冷涼的海洋性氣候、強烈日照與大日夜溫差，造就它「高酸、清脆、香氣爆發」的冰川利刃般風格——與南義地中海那種溫熱厚重的白酒恰好相反。',
+    vinification_note: '走典型馬爾堡商業款做法：不鏽鋼槽低溫發酵、不過橡木桶（unoaked），目的是把品種純淨奔放的果香與高酸完整保留下來，趁年輕鮮飲。',
+    classification_note: '紐西蘭不用義大利那套 DOC／DOCG 分級，而是以「地理標示（GI, Geographical Indication）」標註產區。看到「Marlborough」就代表葡萄來自這個法定產區，是品質與風格的產地背書。',
+    why_beginner: '白蘇維濃香氣討喜、酸度爽脆、零單寧不澀，本來就是很好入口的芳香白，新手接受度高——唯一前提是你不排斥那股「青草味」。冰透了喝最清爽。',
+    drink_window: '現在 – 2026（趁年輕鮮飲，不需陳年）',
+    serve_temp: '6–8°C',
+    decant: '不需要醒酒；重點是「冰超透」（6–8°C，瓶身冒冷凝水那種）——低溫會壓住香氣揮發，讓草味聞起來淡一截、果香與酸度更突出。',
+    background: '這是全聯通路的高 CP 值馬爾堡白蘇維濃（台灣由大樂進口），常被拿來當頂級名莊 Cloudy Bay（雲霧之灣，約 NT$1,000）的親民替身——用約半價就能喝到很典型、乾淨的馬爾堡果香。品質沒問題，定位就是「天天喝得開心又不心疼」的日常款。',
+    tasting_focus: '站主專屬實驗：先把它冰到極致，聞聞看這股「冷調、清脆的青草／蘆筍味」，再拿它跟 Argiolas（Vermentino）那種「溫熱、悶、像香菜＋過熟甜瓜」的草味對照——感受「兩種草」是不是完全不同。若冰透了仍受不了這股青草香，就確認站主的地雷是「任何草本氣息」，日後看到白蘇維濃直接跳過、改抓 Arneis／灰皮諾。',
+    notes_short: '老婆愛喝的馬爾堡白蘇維濃：熱帶果香帶冷調青草，正好用來測站主對「草味」的耐受度',
+    notes_long: null,
+    color_hex: '#E6E2A0',
+    beginner_friendly: true,
+    style_axis: 40,
+    style_note: '白蘇維濃在馬爾堡有極鮮明的產區風格、辨識度高；但這支是通路量產的商業日常款、走標準化清爽路線，因此落在略偏「國際風格」一端。',
+    image: null,
+  },
 ];
 
 // 類型 → 中文 + 顏色（給篩選器跟圖表用）
@@ -1277,6 +1333,64 @@ export const ITALY_ZONE_GROUPS = [
   { key: 'central', it: 'Centro',      zh: '中部',      en: 'Central',          zones: ['Central'] },
   { key: 'south',   it: 'Sud · Isole', zh: '南部 · 離島', en: 'South & Islands', zones: ['South', 'Islands'] },
 ];
+
+// ============================================================
+// 紐西蘭 New Zealand — 多國 Atlas 的第二國。結構與 ITALY_REGIONS 相同；
+// zone 以「島」分（South / North Island）。新國家照這個格式加即可。
+// ============================================================
+export const NZ_REGIONS = [
+  // —— 南島 South Island ——
+  { key: 'marlborough', name_en: 'Marlborough', name_it: 'Marlborough', name_zh: '馬爾堡', zone: 'South Island',
+    grapes: ['Sauvignon Blanc', 'Pinot Noir', 'Chardonnay'], wines: ['Marlborough Sauvignon Blanc'],
+    note: '紐西蘭白蘇維濃的世界級故鄉，香氣奔放、酸度鮮明；也產優雅黑皮諾與傳統法氣泡。' },
+  { key: 'central-otago', name_en: 'Central Otago', name_it: 'Central Otago', name_zh: '中奧塔哥', zone: 'South Island',
+    grapes: ['Pinot Noir', 'Riesling'], wines: ['Central Otago Pinot Noir'],
+    note: '世界最南的葡萄酒產區之一，以世界級黑皮諾聞名；山地大陸性氣候、日夜溫差極大。' },
+  { key: 'nelson', name_en: 'Nelson', name_it: 'Nelson', name_zh: '尼爾森', zone: 'South Island',
+    grapes: ['Sauvignon Blanc', 'Chardonnay', 'Pinot Noir'], wines: [],
+    note: '馬爾堡西鄰、陽光充足的小型精品產區，白蘇維濃、夏多內與黑皮諾皆細緻。' },
+  { key: 'waipara', name_en: 'Waipara · N. Canterbury', name_it: 'Waipara · N. Canterbury', name_zh: '懷帕拉', zone: 'South Island',
+    grapes: ['Riesling', 'Pinot Noir'], wines: [],
+    note: '北坎特伯里的冷涼產區，以芳香的麗絲玲與細緻黑皮諾著稱。' },
+  // —— 北島 North Island ——
+  { key: 'hawkes-bay', name_en: 'Hawke\'s Bay', name_it: 'Hawke\'s Bay', name_zh: '霍克斯灣', zone: 'North Island',
+    grapes: ['Syrah', 'Merlot', 'Cabernet Sauvignon', 'Chardonnay'], wines: ['Gimblett Gravels Syrah'],
+    note: '紐西蘭頂尖紅酒產區，以 Syrah 與波爾多式混釀聞名（名園 Gimblett Gravels），亦產豐厚夏多內。' },
+  { key: 'martinborough', name_en: 'Martinborough', name_it: 'Martinborough', name_zh: '馬丁堡', zone: 'North Island',
+    grapes: ['Pinot Noir', 'Sauvignon Blanc'], wines: [],
+    note: '威靈頓近郊 Wairarapa 的精品小產區，黑皮諾結構細緻、評價極高。' },
+  { key: 'gisborne', name_en: 'Gisborne', name_it: 'Gisborne', name_zh: '吉斯本', zone: 'North Island',
+    grapes: ['Chardonnay', 'Gewürztraminer'], wines: [],
+    note: '紐西蘭最東、迎接全球第一道曙光的產區，以飽滿夏多內與芳香白酒見長。' },
+  { key: 'waiheke', name_en: 'Waiheke Island', name_it: 'Waiheke Island', name_zh: '懷赫科島', zone: 'North Island',
+    grapes: ['Cabernet Sauvignon', 'Merlot', 'Syrah'], wines: [],
+    note: '奧克蘭外海的溫暖島嶼，以高價的波爾多式混釀與 Syrah 聞名。' },
+];
+
+export const NZ_ZONE_GROUPS = [
+  { key: 'south-island', it: 'South Island', zh: '南島', en: 'South Island', zones: ['South Island'] },
+  { key: 'north-island', it: 'North Island', zh: '北島', en: 'North Island', zones: ['North Island'] },
+];
+
+// ============================================================
+// ATLAS — 多國產區索引。地圖與圖表都從這裡走；要加新國家，往陣列加一筆即可。
+// 第一國（義大利）視為「主場」，地圖不另標國家標頭（維持原樣）。
+// ============================================================
+export const ATLAS = [
+  { key: 'italy',       name_en: 'Italy',       name_zh: '義大利', flag: '🇮🇹', regions: ITALY_REGIONS, zoneGroups: ITALY_ZONE_GROUPS },
+  { key: 'new-zealand', name_en: 'New Zealand', name_zh: '紐西蘭', flag: '🇳🇿', regions: NZ_REGIONS,    zoneGroups: NZ_ZONE_GROUPS },
+];
+
+export function regionByKey(key) {
+  for (const c of ATLAS) {
+    const r = c.regions.find(x => x.key === key);
+    if (r) return r;
+  }
+  return null;
+}
+export function countryOfRegion(key) {
+  return ATLAS.find(c => c.regions.some(r => r.key === key)) || null;
+}
 
 // ============================================================
 // 酒莊（producer）參考表 — 給「產區地圖」的酒莊檢視與酒莊 modal 用。

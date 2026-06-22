@@ -1,9 +1,11 @@
 /* ============================================================
-   產區地圖 — 義大利 20 區「探索清單」(ledger)，可切換「酒款 ⇄ 酒莊」兩種檢視
+   產區地圖 — 多國「探索清單」(ledger)，可切換「酒款 ⇄ 酒莊」兩種檢視
    狀態：tasted 已品飲（有評分）/ cellar 待品飲（有酒未評分）/ unexplored 未探索（無收藏）
+   多國：走 ATLAS（義大利 + 紐西蘭 + …）。第一國為「主場」不另標國家標頭；
+        其後的國家（如紐西蘭）以橫跨整列的國家標頭分隔。
    ============================================================ */
 
-import { ITALY_REGIONS, ITALY_ZONE_GROUPS, PRODUCERS } from './data.js';
+import { ATLAS, PRODUCERS, regionByKey } from './data.js';
 
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -18,6 +20,8 @@ const stateOf = (wines) => !wines || !wines.length
 const STATE_ORDER = { tasted: 0, cellar: 1, unexplored: 2 };
 const STATE_MARK  = { tasted: '★', cellar: '◌', unexplored: '·' };
 const STATE_ZH    = { tasted: '已品飲', cellar: '待品飲', unexplored: '未探索' };
+
+const ALL_REGIONS = ATLAS.flatMap(c => c.regions);
 
 let _drinks = [];
 let _view = 'wines';   // 'wines' | 'producers'
@@ -59,9 +63,9 @@ const sortWines = (wines) => (wines || []).slice()
 
 function summaryHTML(drinks) {
   const byRegion = indexByRegion(drinks);
-  const total = ITALY_REGIONS.length;
+  const total = ALL_REGIONS.length;
   let entered = 0, tasted = 0;
-  ITALY_REGIONS.forEach(r => {
+  ALL_REGIONS.forEach(r => {
     const st = stateOf(byRegion[r.key]);
     if (st !== 'unexplored') entered++;
     if (st === 'tasted') tasted++;
@@ -95,37 +99,61 @@ function renderView() {
     : wineViewHTML(_drinks);
 }
 
-/* ---- 酒款檢視（產區 → 酒款）---- */
+// 國家標頭（橫跨整列）— 主場（第一國，義大利）不標，其後國家才標。
+function countryHead(country, byRegion) {
+  const total = country.regions.length;
+  const entered = country.regions.filter(r => stateOf(byRegion[r.key]) !== 'unexplored').length;
+  return `
+    <header class="regions__country-head">
+      <span class="regions__flag" aria-hidden="true">${country.flag}</span>
+      <h3 lang="en">${esc(country.name_en)} <em lang="zh-Hant">${esc(country.name_zh)}</em></h3>
+      <span class="regions__country-count"><b>${entered}</b>/${total}</span>
+    </header>`;
+}
+
+/* ---- 酒款檢視（國家 → 產區 → 酒款）---- */
 function wineViewHTML(drinks) {
   const byRegion = indexByRegion(drinks);
 
-  return ITALY_ZONE_GROUPS.map(g => {
-    const regions = ITALY_REGIONS.filter(r => g.zones.includes(r.zone));
-    const gEntered = regions.filter(r => stateOf(byRegion[r.key]) !== 'unexplored').length;
+  return ATLAS.map((country, ci) => {
+    // 主場（義大利）一律顯示；其後國家只有「有收藏」時才出現，避免空國家洗版。
+    const hasWines = country.regions.some(r => (byRegion[r.key] || []).length);
+    if (ci > 0 && !hasWines) return '';
 
-    const entered = regions
-      .map(r => ({ r, wines: sortWines(byRegion[r.key]), st: stateOf(byRegion[r.key]) }))
-      .filter(x => x.st !== 'unexplored')
-      .sort((a, b) => STATE_ORDER[a.st] - STATE_ORDER[b.st])
-      .map(x => regionRow(x.r, x.wines, x.st)).join('');
-
-    const unexplored = regions.filter(r => stateOf(byRegion[r.key]) === 'unexplored');
-    const more = unexplored.length ? `
-      <details class="regions__more">
-        <summary><span class="region__mark region__mark--unexplored">·</span>其餘 ${unexplored.length} 區待探索</summary>
-        <ul class="regions__list regions__list--more">${unexplored.map(r => regionRow(r, [], 'unexplored')).join('')}</ul>
-      </details>` : '';
-
-    return `
-      <section class="regions__zone">
-        <header class="regions__zone-head">
-          <h3 lang="it">${esc(g.it)} <em lang="zh-Hant">${esc(g.zh)}</em></h3>
-          <span class="regions__zone-count"><b>${gEntered}</b>/${regions.length}</span>
-        </header>
-        <ul class="regions__list">${entered}</ul>
-        ${more}
-      </section>`;
+    const head = ci === 0 ? '' : countryHead(country, byRegion);
+    const zones = country.zoneGroups
+      .map(g => zoneSectionHTML(g, country.regions, byRegion))
+      .join('');
+    return head + zones;
   }).join('');
+}
+
+function zoneSectionHTML(g, regions, byRegion) {
+  const zoneRegions = regions.filter(r => g.zones.includes(r.zone));
+  const gEntered = zoneRegions.filter(r => stateOf(byRegion[r.key]) !== 'unexplored').length;
+
+  const entered = zoneRegions
+    .map(r => ({ r, wines: sortWines(byRegion[r.key]), st: stateOf(byRegion[r.key]) }))
+    .filter(x => x.st !== 'unexplored')
+    .sort((a, b) => STATE_ORDER[a.st] - STATE_ORDER[b.st])
+    .map(x => regionRow(x.r, x.wines, x.st)).join('');
+
+  const unexplored = zoneRegions.filter(r => stateOf(byRegion[r.key]) === 'unexplored');
+  const more = unexplored.length ? `
+    <details class="regions__more">
+      <summary><span class="region__mark region__mark--unexplored">·</span>其餘 ${unexplored.length} 區待探索</summary>
+      <ul class="regions__list regions__list--more">${unexplored.map(r => regionRow(r, [], 'unexplored')).join('')}</ul>
+    </details>` : '';
+
+  return `
+    <section class="regions__zone">
+      <header class="regions__zone-head">
+        <h3 lang="it">${esc(g.it)} <em lang="zh-Hant">${esc(g.zh)}</em></h3>
+        <span class="regions__zone-count"><b>${gEntered}</b>/${zoneRegions.length}</span>
+      </header>
+      <ul class="regions__list">${entered}</ul>
+      ${more}
+    </section>`;
 }
 
 function regionRow(r, wines, st) {
@@ -145,34 +173,43 @@ function regionRow(r, wines, st) {
 const chip = (w) =>
   `<button type="button" class="region__chip" data-wine-id="${esc(w.id)}" title="${esc(w.name_en)}">${esc(w.name_en)}</button>`;
 
-/* ---- 酒莊檢視（產區 → 酒莊；只列已收藏的莊，空產區不出現）---- */
+/* ---- 酒莊檢視（國家 → 產區 → 酒莊；只列已收藏的莊，空產區不出現）---- */
 function producerViewHTML(drinks) {
+  const byRegion = indexByRegion(drinks);
   const owned = PRODUCERS
     .map(p => ({ p, wines: sortWines(drinks.filter(d => d.producer === p.key)) }))
     .filter(x => x.wines.length)
     .map(x => ({ ...x, st: stateOf(x.wines) }));
 
-  return ITALY_ZONE_GROUPS.map(g => {
-    const inZone = owned.filter(x => {
-      const r = ITALY_REGIONS.find(rr => rr.key === x.p.region_key);
-      return r && g.zones.includes(r.zone);
-    }).sort((a, b) => STATE_ORDER[a.st] - STATE_ORDER[b.st]);
-    if (!inZone.length) return '';
+  return ATLAS.map((country, ci) => {
+    const keySet = new Set(country.regions.map(r => r.key));
+    const inCountry = owned.filter(x => keySet.has(x.p.region_key));
+    if (!inCountry.length) return '';
 
-    const rows = inZone.map(x => producerRow(x.p, x.wines, x.st)).join('');
-    return `
-      <section class="regions__zone">
-        <header class="regions__zone-head">
-          <h3 lang="it">${esc(g.it)} <em lang="zh-Hant">${esc(g.zh)}</em></h3>
-          <span class="regions__zone-count"><b>${inZone.length}</b> 莊</span>
-        </header>
-        <ul class="regions__list regions__list--producers">${rows}</ul>
-      </section>`;
+    const head = ci === 0 ? '' : countryHead(country, byRegion);
+    const zones = country.zoneGroups.map(g => {
+      const inZone = inCountry.filter(x => {
+        const r = regionByKey(x.p.region_key);
+        return r && g.zones.includes(r.zone);
+      }).sort((a, b) => STATE_ORDER[a.st] - STATE_ORDER[b.st]);
+      if (!inZone.length) return '';
+
+      const rows = inZone.map(x => producerRow(x.p, x.wines, x.st)).join('');
+      return `
+        <section class="regions__zone">
+          <header class="regions__zone-head">
+            <h3 lang="it">${esc(g.it)} <em lang="zh-Hant">${esc(g.zh)}</em></h3>
+            <span class="regions__zone-count"><b>${inZone.length}</b> 莊</span>
+          </header>
+          <ul class="regions__list regions__list--producers">${rows}</ul>
+        </section>`;
+    }).join('');
+    return head + zones;
   }).join('');
 }
 
 function producerRow(p, wines, st) {
-  const region = ITALY_REGIONS.find(r => r.key === p.region_key);
+  const region = regionByKey(p.region_key);
   const meta = [p.founded, p.type, p.tagline].filter(Boolean).join(' · ');
   return `
     <li class="producer producer--${st}">

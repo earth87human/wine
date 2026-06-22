@@ -2,7 +2,7 @@
    Charts — pure SVG, animated on intersection
    ============================================================ */
 
-import { ITALY_REGIONS } from './data.js';
+import { regionByKey, countryOfRegion } from './data.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -111,15 +111,16 @@ function renderRegionChart(drinks) {
 
   const rows = Object.entries(counts)
     .map(([key, count]) => {
-      const r = ITALY_REGIONS.find(x => x.key === key);
-      return { name: r ? r.name_it : key, count };
+      const r = regionByKey(key);
+      const c = countryOfRegion(key);
+      return { name: r ? r.name_it : key, flag: c ? c.flag : '🇮🇹', count };
     })
     .sort((a, b) => b.count - a.count);
   const max = Math.max(...rows.map(r => r.count), 1);
 
   const html = rows.map((r, i) => `
     <div class="row">
-      <span class="label"><span class="flag" aria-hidden="true">🇮🇹</span>${esc(r.name)}</span>
+      <span class="label"><span class="flag" aria-hidden="true">${r.flag}</span>${esc(r.name)}</span>
       <div class="track">
         <div class="fill" data-w="${(r.count / max * 100).toFixed(1)}%"
              style="transition-delay: ${i * 70}ms;"></div>

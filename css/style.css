@@ -392,6 +392,15 @@ body.is-ready .hero__scroll { animation: fadein 1s 1.2s var(--e-soft) forwards; 
   max-width: var(--max-w); margin: 0 auto; padding: clamp(1rem, 2vw, 2rem) var(--gut-x) var(--pad-y); }
 @media (max-width: 920px) { .regions__zones { grid-template-columns: 1fr; gap: 2.5rem; } }
 
+/* 多國地圖：國家標頭（橫跨整列當分隔；主場義大利不顯示） */
+.regions__country-head { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 0.7rem;
+  margin-top: clamp(1.5rem, 4vw, 3rem); padding-bottom: 0.7rem; border-bottom: 2px solid var(--line-2); }
+.regions__country-head .regions__flag { font-size: 1.5rem; line-height: 1; }
+.regions__country-head h3 { font-family: var(--f-display); font-weight: 400; font-size: 1.6rem; color: var(--ink); margin: 0; letter-spacing: 0.02em; }
+.regions__country-head h3 em { font-family: var(--f-sans-tc); font-style: normal; font-size: 0.9rem; color: var(--mute); margin-left: 0.5rem; }
+.regions__country-count { margin-left: auto; align-self: center; font-family: var(--f-ui); font-size: 11px; letter-spacing: 0.08em; color: var(--mute); white-space: nowrap; }
+.regions__country-count b { font-family: var(--f-display); font-style: italic; font-size: 1.15rem; color: var(--bronze-text); margin-right: 0.05rem; }
+
 .regions__zone-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
   padding-bottom: 0.8rem; border-bottom: 1px solid var(--line-2); margin-bottom: 0.2rem; }
 .regions__zone-head h3 { font-family: var(--f-display); font-weight: 400; font-size: 1.3rem; color: var(--ink); margin: 0; letter-spacing: 0.02em; }

@@ -1,4 +1,4 @@
-import { drinks, typeMeta, styleAxisTier, STYLE_AXIS_ENDS, ITALY_REGIONS, producerByKey } from './data.js';
+import { drinks, typeMeta, styleAxisTier, STYLE_AXIS_ENDS, regionByKey, producerByKey } from './data.js';
 import { setupReveal, setupNav, animateCounter, hideLoader, setupCinema } from './animations.js';
 import { renderCharts } from './charts.js';
 import { renderRegions } from './regions.js';
@@ -422,7 +422,7 @@ function openModal(d, { push = true } = {}) {
    Producer (winery) modal — reuses the same sheet
    ============================================================ */
 function openProducerModal(p, { push = true } = {}) {
-  const region = ITALY_REGIONS.find(r => r.key === p.region_key);
+  const region = regionByKey(p.region_key);
   const wines = drinks.filter(d => d.producer === p.key)
     .sort((a, b) => (a.rating == null) - (b.rating == null));
 
