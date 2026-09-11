@@ -67,6 +67,7 @@ const IMG_BY_TYPE = {
   'white':           'photo-1597905722448-a1df7c00000a',
   'sparkling-white': 'photo-1607955868623-e135a7e50b0d',
   'rose':            'photo-1547595628-c61a29f496f0',
+  'sparkling-rose':  'photo-1547595628-c61a29f496f0',
 };
 // One DISTINCT, individually-verified (HTTP 200 + visually vetted) photo per wine,
 // so the gallery never repeats a tile.
@@ -107,7 +108,7 @@ const BUCKETS = [
   { key: 'sparkling', zh: '氣泡',   match: d => d.type.startsWith('sparkling') },
   { key: 'red',       zh: '紅酒',   match: d => d.type === 'red' || d.type === 'sparkling-red' },
   { key: 'white',     zh: '白酒',   match: d => d.type === 'white' || d.type === 'sparkling-white' },
-  { key: 'rose',      zh: '粉紅',   match: d => d.type === 'rose' },
+  { key: 'rose',      zh: '粉紅',   match: d => d.type === 'rose' || d.type === 'sparkling-rose' },
   { key: 'totry',     zh: '待品飲', match: d => d.rating == null },
 ];
 
