@@ -1534,7 +1534,7 @@ export const drinks = [
     sweetness: '乾型（Brut，殘糖約 7.9 g/L）',
     classification: 'Vino Spumante di Qualità（VSQ 優質氣泡酒，無地理分級）',
     price: 1000,
-    bottles: 1,
+    bottles: 2,
     price_tier: '$$',
     market_price_twd: '歐洲零售約 €14–18；越昇牌價 NT$1,250',
     rating: null,
