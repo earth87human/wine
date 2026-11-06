@@ -1746,6 +1746,121 @@ export const drinks = [
     style_note: '原生品種 Monica、以水泥槽為主幾乎不靠橡木桶，比 Iselis Monica 更貼近品種本身，偏風土；但它是每年二、三十萬瓶的日常主力款，走穩定一致的商業路線，所以落在偏風土的中段。',
     image: null,
   },
+  {
+    id: 'errazuriz-estate-cabernet',
+    region_key: 'aconcagua',
+    category: 'wine',
+    type: 'red',
+    type_zh: '紅酒',
+    name_en: 'Errazuriz Estate Reserva Cabernet Sauvignon',
+    name_zh: '伊拉蘇 莊園系列 卡本內蘇維濃',
+    producer: 'Errazuriz',
+    varietal: 'Cabernet Sauvignon',
+    varietal_zh: '卡本內蘇維濃',
+    region: 'Aconcagua · Maipo',
+    region_zh: '阿空加瓜谷・麥坡谷',
+    country: 'Chile',
+    country_zh: '智利',
+    year: 2024,
+    abv: 13.5,
+    sweetness: '乾型（殘糖 2.56 g/L）',
+    classification: 'Reserva（智利 D.O. 產區酒）',
+    price: 535,
+    bottles: 1,
+    price_tier: '$',
+    market_price_twd: '台灣酒商約 NT$580–760；英國超市約 £7.5–10.5',
+    rating: null,
+    tasting_date: null,
+    occasion: '全聯購入',
+    highlights: [
+      '收藏裡第一支智利酒，也是第一支卡本內蘇維濃',
+      '智利老牌家族酒莊（1870 年創立）的入門 Estate 系列',
+      '2024 年份：法國＋美國橡木桶 7 個月，新桶只占 10%',
+      '瓶頸金標是 Drinks International「全球最受推崇酒品牌」榜，評的是品牌，不是這瓶酒',
+      '全聯 NT$535，比台灣酒商常見的 NT$580–760 便宜',
+    ],
+    appearance: '紫紅色，帶寶石紅光澤（酒莊 2024 年份筆記）。',
+    aroma: ['紅色水果', '巧克力', '香草', '焦糖', '淡淡香脂調'],
+    palate: ['多汁', '酸度明亮', '單寧柔順', '櫻桃派', '熟李子', '丁香'],
+    finish: '收尾優雅，帶奶油般的香草感（酒莊 2024 年份筆記）。',
+    pairing: ['牛排', '烤羊排', '燒烤', '紅燒肉', '漢堡'],
+    pairing_note: '卡本內有單寧也有酸度，最適合油脂多的紅肉：單寧會和肉裡的蛋白質、油脂結合，吃起來更順。這支單寧算柔，台式紅燒、滷肉也接得住。',
+    varietal_note: '卡本內蘇維濃（Cabernet Sauvignon）是全世界種植最廣的紅葡萄之一，也是波爾多左岸名酒的主角。果皮厚、顏色深，單寧和酸度都足；典型風味是黑醋栗、黑櫻桃，過橡木桶後會多出香草、可可、雪松。\n\n有些產區的卡本內會帶一點青椒、薄荷味，和白蘇維濃的草味來自同一類成分，智利卡本內偶爾也會有。',
+    region_note: '伊拉蘇的根據地在聖地牙哥北方的阿空加瓜谷（Aconcagua Valley），山谷以南美最高峰阿空加瓜山命名，氣候溫暖、陽光充足。這個系列的卡本內歷年多標示 Maipo 與 Aconcagua 兩個產區的葡萄（以瓶身背標為準）；麥坡谷（Maipo）就在首都聖地牙哥周邊，是智利最經典的卡本內產區。',
+    vinification_note: '2024 年份在法國與美國橡木桶陳年 7 個月，其中新桶占 10%。新桶比例低，木頭味只是點綴，不會蓋過果味。酒精 13.5%、殘糖 2.56 g/L，是乾型。',
+    classification_note: '智利用 D.O.（Denominación de Origen，法定產區）標示葡萄來源。酒標上的「Reserva」在智利的法規要求很寬鬆，基本上只規定酒精度比最低標準高一點，沒有強制陳年時間；和西班牙 Reserva、義大利 Riserva 有明確陳年規定不同，把它當作系列名稱看就好。',
+    producer_note: '伊拉蘇（Viña Errázuriz）1870 年由 Don Maximiano Errázuriz 在阿空加瓜谷創立，至今仍由同一家族經營，現任掌門是 Eduardo Chadwick。2004 年的「柏林盲品會」上，同家族的 Viñedo Chadwick 和 Seña 在盲飲中勝過多支波爾多一級酒莊，讓智利頂級酒一戰成名。Estate 是酒莊的入門系列，往上還有 Max（台灣約 NT$1,150–1,360）、Aconcagua Costa、Don Maximiano（台灣約 NT$3,900 起）等。',
+    why_beginner: '卡本內是認識紅酒的必修品種。這支單寧柔、果味足、價格親民，又是大酒莊的穩定款，很適合當作「卡本內的標準樣本」，之後再拿別國的卡本內來比。',
+    drink_window: '現在 – 2029（入門款，趁果味新鮮時喝；推估）',
+    serve_temp: '16–18°C',
+    decant: '不一定要醒酒；開瓶後放 20–30 分鐘會更柔順。台灣室溫偏高，倒酒前先冰鎮 15–20 分鐘，降到 16–18°C。',
+    background: '這支是在全聯 NT$535 買的。台灣酒商常見售價約 NT$580–760，英國超市約 £7.5–10.5；以進口酒在台灣的稅和通路成本來說，535 是行情價，甚至略便宜。\n\n瓶頸的金色貼紙是英國酒業雜誌 Drinks International 的「全球最受推崇酒品牌（The World’s Most Admired Wine Brands）」2024 年榜單，由業界人士投票選出形象最好的酒廠品牌，不是給這瓶酒的評分。',
+    tasting_focus: '品飲練習：(1) 和你喝過的黑皮諾比：卡本內顏色更深、單寧更多，感受嘴裡「被收緊」的程度差多少。(2) 酒莊筆記提到「淡淡香脂調」，聞香時留意有沒有薄荷、青椒這類綠色調；如果有，可以和你不喜歡的白蘇維濃草味比比看，紅酒裡的綠色調你能不能接受。(3) 找香草、焦糖味：那是橡木桶帶來的。',
+    notes_short: '智利老牌酒莊的入門卡本內：果味足、單寧柔，全聯價比行情便宜',
+    notes_long: null,
+    color_hex: '#5E1A2B',
+    beginner_friendly: true,
+    style_axis: 25,
+    style_note: '卡本內蘇維濃是最國際化的品種，這支又是大酒莊穩定量產、走成熟果香加橡木桶的國際路線，所以偏「國際風格」一端。',
+    image: null,
+  },
+  {
+    id: 'ttl-jade-spring-select-red',
+    region_key: 'central-taiwan',
+    category: 'wine',
+    type: 'red',
+    type_zh: '紅酒',
+    name_en: 'Jade Spring Select Red Wine',
+    name_zh: '玉泉 JADE SPRING 精選紅葡萄酒',
+    producer: 'TTL 台灣菸酒',
+    varietal: 'Black Queen · Cabernet Sauvignon · Merlot',
+    varietal_zh: '黑后 · 卡本內蘇維濃 · 梅洛',
+    region: 'Central Taiwan',
+    region_zh: '台灣中部（南投酒廠釀造）',
+    country: 'Taiwan',
+    country_zh: '台灣',
+    year: null,
+    abv: 12.5,
+    sweetness: '乾型（評測多形容幾乎不甜）',
+    classification: '台灣國產葡萄酒（無產區分級）',
+    price: 335,
+    bottles: 1,
+    price_tier: '$',
+    market_price_twd: '官方建議售價 NT$420；家樂福特價曾見 NT$360',
+    rating: null,
+    tasting_date: null,
+    occasion: '機場購入',
+    highlights: [
+      '收藏裡第一支台灣葡萄酒',
+      '以台灣本土栽種的「黑后」為主，混入卡本內蘇維濃與梅洛',
+      '台酒南投酒廠出品，2023 年初上市的較新系列',
+      '機場 NT$335，比官方建議售價 NT$420 便宜不少',
+    ],
+    appearance: '黑后果皮花青素多，酒色通常是偏深的紫紅。',
+    aroma: ['黑色水果', '莓果'],
+    palate: ['中等酒體', '酸度偏高', '幾乎不甜', '帶點澀感'],
+    finish: null,
+    pairing: ['滷味', '三杯雞', '烤肉', '紅燒料理'],
+    pairing_note: '酸度高的紅酒很會解油膩，適合台式重口味的滷、燒、烤。台酒另一支以黑后為主的玉泉紅酒，官方就建議搭配紅燒料理，可以去腥解膩。',
+    varietal_note: '黑后（Black Queen）是日本「酒葡萄之父」川上善兵衛培育的雜交品種，親本是北美系的 Bailey 和歐洲系的 Golden Queen。它果皮紫黑、花青素多，釀出的酒顏色深、酸度高，是台灣最重要的釀酒紅葡萄，主要種在台中、彰化一帶。\n\n黑后不屬於卡本內家族，通常不帶青椒、青草那類綠色調。',
+    region_note: '台灣的釀酒葡萄集中在中部的台中、彰化一帶（例如后里、二林），主力是紅葡萄黑后和白葡萄金香。台酒南投酒廠把本土黑后和進口的卡本內蘇維濃、梅洛調配成這支酒。',
+    vinification_note: '南投酒廠把台灣黑后和進口的卡本內蘇維濃、梅洛調配而成；各品種比例、有沒有過橡木桶，官方資料沒有公開。',
+    classification_note: '台灣沒有像義大利 DOC、法國 AOC 那樣的產區分級制度；「精選」是商品名稱，不是法定等級。',
+    producer_note: '台灣菸酒公司（台酒）前身是公賣局，旗下有多座酒廠。玉泉是台酒的葡萄酒品牌，JADE SPRING 是玉泉較新的系列（約 2023 年初上市），由南投酒廠生產；南投酒廠也是 OMAR 威士忌的產地。',
+    why_beginner: '價格親民、酒精 12.5% 不算重，是認識台灣本土葡萄「黑后」最容易買到的一支。酸度偏高、帶點澀，適合配著台式料理喝。',
+    drink_window: '現在 – 2027（推估；平價國產紅酒建議早點喝）',
+    serve_temp: '14–16°C',
+    decant: '不需要醒酒。台灣室溫偏高，倒酒前先冰鎮 15–20 分鐘，降到 14–16°C 再喝。',
+    background: '這支是在機場買的，NT$335。台酒官方建議售價 NT$420，家樂福特價曾見 NT$360；台酒在機場有自己的免稅店，免稅價不含菸酒稅，所以比一般通路便宜。\n\n定位是國營大廠的平價國產紅酒，當作認識台灣在地風味的一支就好，不必拿去和進口名莊比。',
+    tasting_focus: '品飲練習：(1) 看顏色：黑后花青素多，酒色應該很深。(2) 感受酸度：黑后以高酸出名，喝一口後注意口水分泌的程度。(3) 和伊拉蘇卡本內對照：兩支都有卡本內，但這支以黑后為主，比比看果味、酸度、澀感哪裡不一樣。',
+    notes_short: '台酒南投酒廠的本土黑后混釀：酸度明顯、幾乎不甜，機場買比建議售價便宜',
+    notes_long: null,
+    color_hex: '#4A1530',
+    beginner_friendly: true,
+    style_axis: 55,
+    style_note: '以台灣本土栽種的黑后為主，在地辨識度高；但它是國營大廠的量產款，又混了國際品種卡本內和梅洛，所以落在中間。',
+    image: null,
+  },
 ];
 
 // 類型 → 中文 + 顏色（給篩選器跟圖表用）
@@ -1894,12 +2009,68 @@ export const NZ_ZONE_GROUPS = [
 ];
 
 // ============================================================
+// 智利 Chile — 結構同上；zone 依智利 D.O. 大區（北部 / 阿空加瓜 / 中央谷地 / 南部）。
+// ============================================================
+export const CHILE_REGIONS = [
+  // —— 北部 Coquimbo ——
+  { key: 'limari', name_en: 'Limarí Valley', name_it: 'Limarí', name_zh: '利馬里谷', zone: 'Coquimbo',
+    grapes: ['Chardonnay', 'Syrah'], wines: [],
+    note: '智利北部靠海的冷涼河谷，有少見的石灰質土壤，以清爽帶礦物感的夏多內聞名。' },
+  // —— 阿空加瓜 Aconcagua ——
+  { key: 'aconcagua', name_en: 'Aconcagua Valley', name_it: 'Aconcagua', name_zh: '阿空加瓜谷', zone: 'Aconcagua',
+    grapes: ['Cabernet Sauvignon', 'Syrah', 'Carmenère'], wines: [],
+    note: '以南美最高峰命名的溫暖河谷，在聖地牙哥北方，是伊拉蘇（Errazuriz）的根據地，擅長飽滿的紅酒。' },
+  { key: 'casablanca', name_en: 'Casablanca Valley', name_it: 'Casablanca', name_zh: '卡薩布蘭卡谷', zone: 'Aconcagua',
+    grapes: ['Sauvignon Blanc', 'Chardonnay', 'Pinot Noir'], wines: [],
+    note: '受太平洋冷風影響的冷涼產區，是智利清爽白酒和黑皮諾的代表。' },
+  { key: 'san-antonio', name_en: 'San Antonio · Leyda', name_it: 'San Antonio · Leyda', name_zh: '聖安東尼奧・雷達', zone: 'Aconcagua',
+    grapes: ['Sauvignon Blanc', 'Pinot Noir'], wines: [],
+    note: '離海最近的冷涼產區之一，白蘇維濃酸度鮮明、帶海風感。' },
+  // —— 中央谷地 Central Valley ——
+  { key: 'maipo', name_en: 'Maipo Valley', name_it: 'Maipo', name_zh: '麥坡谷', zone: 'Central Valley',
+    grapes: ['Cabernet Sauvignon', 'Carmenère', 'Merlot'], wines: ['Maipo Cabernet Sauvignon'],
+    note: '圍繞首都聖地牙哥的經典產區，被稱為智利卡本內蘇維濃的故鄉，許多頂級卡本內出自安地斯山腳的 Alto Maipo。' },
+  { key: 'colchagua', name_en: 'Colchagua Valley', name_it: 'Colchagua', name_zh: '空加瓜谷', zone: 'Central Valley',
+    grapes: ['Carmenère', 'Cabernet Sauvignon', 'Syrah'], wines: [],
+    note: '溫暖、陽光充足，以濃郁的卡門內爾（Carmenère）和紅酒混釀聞名，名坡 Apalta 就在這裡。' },
+  { key: 'maule', name_en: 'Maule Valley', name_it: 'Maule', name_zh: '茂勒谷', zone: 'Central Valley',
+    grapes: ['Carignan', 'País', 'Cabernet Sauvignon'], wines: [],
+    note: '智利面積最大的產區之一，老藤 Carignan 和傳統品種 País 近年很受矚目。' },
+  // —— 南部 South ——
+  { key: 'itata', name_en: 'Itata Valley', name_it: 'Itata', name_zh: '伊塔塔谷', zone: 'South',
+    grapes: ['País', 'Cinsault', 'Muscat'], wines: [],
+    note: '智利最古老的產區之一，多老藤、旱作，近年因小農酒重新受到關注。' },
+];
+
+export const CHILE_ZONE_GROUPS = [
+  { key: 'cl-north',     it: 'Norte · Coquimbo', zh: '北部',     en: 'North',          zones: ['Coquimbo'] },
+  { key: 'cl-aconcagua', it: 'Aconcagua',        zh: '阿空加瓜區', en: 'Aconcagua',      zones: ['Aconcagua'] },
+  { key: 'cl-central',   it: 'Valle Central',    zh: '中央谷地',  en: 'Central Valley', zones: ['Central Valley'] },
+  { key: 'cl-south',     it: 'Sur',              zh: '南部',     en: 'South',          zones: ['South'] },
+];
+
+// ============================================================
+// 台灣 Taiwan — 釀酒葡萄集中在中部，先列一區。
+// ============================================================
+export const TAIWAN_REGIONS = [
+  { key: 'central-taiwan', name_en: 'Central Taiwan', name_it: 'Taichung · Changhua', name_zh: '中部（台中・彰化）', zone: 'Central',
+    grapes: ['Black Queen', 'Golden Muscat'], wines: [],
+    note: '台灣釀酒葡萄的主產帶，台中后里、彰化二林一帶種著紅葡萄黑后和白葡萄金香，不少小型酒莊也設在這裡。' },
+];
+
+export const TAIWAN_ZONE_GROUPS = [
+  { key: 'tw-central', it: 'Central Taiwan', zh: '中部', en: 'Central', zones: ['Central'] },
+];
+
+// ============================================================
 // ATLAS — 多國產區索引。地圖與圖表都從這裡走；要加新國家，往陣列加一筆即可。
 // 第一國（義大利）視為「主場」，地圖不另標國家標頭（維持原樣）。
 // ============================================================
 export const ATLAS = [
   { key: 'italy',       name_en: 'Italy',       name_zh: '義大利', flag: '🇮🇹', regions: ITALY_REGIONS, zoneGroups: ITALY_ZONE_GROUPS },
   { key: 'new-zealand', name_en: 'New Zealand', name_zh: '紐西蘭', flag: '🇳🇿', regions: NZ_REGIONS,    zoneGroups: NZ_ZONE_GROUPS },
+  { key: 'chile',       name_en: 'Chile',       name_zh: '智利',   flag: '🇨🇱', regions: CHILE_REGIONS,  zoneGroups: CHILE_ZONE_GROUPS },
+  { key: 'taiwan',      name_en: 'Taiwan',      name_zh: '台灣',   flag: '🇹🇼', regions: TAIWAN_REGIONS, zoneGroups: TAIWAN_ZONE_GROUPS },
 ];
 
 export function regionByKey(key) {
